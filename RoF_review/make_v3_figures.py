@@ -66,12 +66,13 @@ def lattice_tower(ax, x, y, h=0.9, color="#C0392B", lw=1.3):
         ax.add_patch(Rectangle((x + s * 0.05 - 0.02, y + h * 0.72), 0.04, 0.16, fc="white", ec=color, lw=0.9, zorder=6))
 
 
-def handset(ax, x, y, ang=25):
-    ax.add_patch(FancyBboxPatch((x, y), 0.2, 0.09, boxstyle="round,pad=0.01,rounding_size=0.02",
-                                fc="#1E3F8A", ec="#0B1F4D", lw=0.8, zorder=6,
-                                transform=matplotlib.transforms.Affine2D().rotate_deg_around(x, y, ang) + ax.transData))
-    ax.add_patch(Rectangle((x + 0.03, y + 0.02), 0.13, 0.05, fc="#6C8FD6", ec="none", zorder=7,
-                           transform=matplotlib.transforms.Affine2D().rotate_deg_around(x, y, ang) + ax.transData))
+def handset(ax, x, y, w=0.15, h=0.27):
+    """Upright mobile phone (user equipment); (x, y) = bottom-left corner."""
+    ax.add_patch(FancyBboxPatch((x, y), w, h, boxstyle="round,pad=0,rounding_size=0.03",
+                                fc="#1E3F8A", ec="#0B1F4D", lw=1, zorder=6))
+    ax.add_patch(Rectangle((x + 0.018, y + 0.05), w - 0.036, h - 0.09, fc="#9CC3F5", ec="none", zorder=7))
+    ax.plot([x + w * 0.35, x + w * 0.65], [y + h - 0.02, y + h - 0.02], color="#9CC3F5", lw=1, zorder=7)
+    ax.add_patch(Circle((x + w / 2, y + 0.025), 0.012, fc="#9CC3F5", ec="none", zorder=7))
 
 
 def database(ax, x, y):
@@ -154,9 +155,10 @@ def f_arch():
         ax.add_patch(Ellipse((x + 0.25, 2.95), 1.95, 0.85, fc=col, ec="none", zorder=1))
         lattice_tower(ax, x, 2.55, h=0.8)
         ax.text(x, 2.32, "RRH", ha="center", va="bottom", **B)
-        handset(ax, x - 0.7, 3.22, 30)
-        handset(ax, x + 0.5, 3.25, 25)
-        ax.text(x + 0.35, 2.62, "User", ha="left", **B)
+        for px in (x - 0.75, x + 0.55):
+            handset(ax, px, 3.07)
+            ax.plot([x, px + 0.075], [3.25, 3.2], color="#707070", lw=1.1, ls=(0, (3, 2)), zorder=2)
+        ax.text(x + 0.3, 2.62, "User (UE)", ha="left", **B)
     ax.plot([bx + 0.3, 6.6], [yt, yt], **FIB)
     ax.plot([6.6, 8.85], [yt, yt], **FIB)
     ax.text(5.95, yt - 0.25, "optical fiber", ha="center", **L)
