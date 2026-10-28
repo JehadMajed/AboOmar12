@@ -2,8 +2,10 @@
 
 **الملف الأصلي:** `Radio_over_Fiber_Reviewed_Final_v4.pptx`، ويضم 31 شريحة و5 صور نقطية (Raster).
 **المخرجات:**
-- `RoF_Technical_Review.pptx`: العرض المعاد بناؤه، ويضم 13 شريحة رئيسية و8 شرائح Appendix. كل الرسوم فيه Vector أصلية قابلة للتحرير، وليس فيه صور نقطية.
-- `build_rof_deck.js`: السكربت الذي يولّد العرض.
+- `RoF_Technical_Review.pptx`: العرض المعاد بناؤه (النسخة الثانية، المبسطة)، ويضم 14 شريحة رئيسية و4 شرائح Appendix. كل شريحة فيها رسم أو Plot واحد كبير وسطر واحد فقط، والتفاصيل في الـSpeaker Notes.
+- `figures/`: كل الرسوم والـPlots بصيغة PNG عالية الدقة (220 dpi).
+- `make_figures.py`: يولّد الرسوم. الـPlots محسوبة من المعادلات المذكورة في الـNotes.
+- `build_rof_deck.js`: يولّد العرض من الرسوم.
 - هذا التقرير.
 
 **قيود التحقق:** تعذّر الوصول من بيئة العمل إلى arxiv.org وmdpi.com وpbeaxell.com. لذلك وُسمت كل قيمة تعتمد على هذه المصادر وحدها بعبارة *Verification required*. تحققتُ مباشرة من القيم التالية:
@@ -95,23 +97,24 @@
 
 ## C. الهيكل الجديد مع توزيع الوقت والمتحدثين
 
-| # | الشريحة | الوظيفة | المتحدث | الوقت | التراكمي |
+| # | الشريحة | الرسم | المتحدث | الوقت | التراكمي |
 |---|---|---|---|---|---|
-| 1 | Title | تحديد الموضوع وتقسيم الأدوار | A | 0:20 | 0:20 |
-| 2 | Problem and scope | المشكلة، وحدود النطاق، والبدائل | A | 1:15 | 1:35 |
-| 3 | Definition | تعريف وضبط المصطلحات | A | 1:15 | 2:50 |
-| 4 | End-to-end signal path | DL/UL، ومواضع E/O وO/E، وقاعدة 1 dB→2 dB | A | 1:45 | 4:35 |
-| 5 | Architecture | موضع الوصلة، والفرق بين Fronthaul وBackhaul | A | 1:30 | 6:05 |
-| 6 | RoF types | RFoF/IFoF/Digital، ومقايضة التعقيد مقابل السعة | A | 1:30 | 7:35 |
-| — | **تسليم إلى المتحدث B** | | | 0:10 | 7:45 |
-| 7 | Comparison 1 | Coax مقابل RFoF، وطول التعادل | B | 1:45 | 9:30 |
-| 8 | Comparison 2 | A-RoF مقابل CPRI | B | 1:30 | 11:00 |
-| 9 | Benefits + conditions | الفائدة، وشرطها، وما لا تعنيه | B | 1:00 | 12:00 |
-| 10 | Limitations | الآليات الفيزيائية وSFDR | B | 1:15 | 13:15 |
-| 11 | Documented case | حالة موثقة، وما تثبته وما لا تثبته | B | 1:00 | 14:15 |
-| 12 | Conclusions | استنتاجات مربوطة بالأدلة | B | 0:45 | 15:00 |
-| 13 | Questions | — | A+B | — | — |
-| A1–A8 | Appendix | مرجعي، للأسئلة | — | — | — |
+| 1 | Radio over Fiber (RoF) | مخطط الوصلة الأساسي | A | 0:20 | 0:20 |
+| 2 | The problem | مقطع مبنى بهوائيات في كل طابق | A | 1:00 | 1:20 |
+| 3 | What RoF is | الوصلة مع الطيف الكهربائي والضوئي | A | 1:15 | 2:35 |
+| 4 | Signal path | مسار DL/UL ومواضع E/O وO/E | A | 1:30 | 4:05 |
+| 5 | Where it sits in the network | Head-end ونجمة ألياف إلى RAUs | A | 1:15 | 5:20 |
+| 6 | Three ways to use the fiber | الإشارة على الليف وسلسلة الوحدة البعيدة | A | 1:30 | 6:50 |
+| — | **تسليم إلى المتحدث B** | | | 0:10 | 7:00 |
+| 7 | Coax or fiber? | Plot: الفقد مقابل الطول وطول التعادل | B | 1:45 | 8:45 |
+| 8 | Analog RoF vs digital fronthaul | Plot: معدل CPRI مقابل عدد الهوائيات | B | 1:30 | 10:15 |
+| 9 | Benefit: low fiber loss | Plot: التوهين مقابل طول الموجة | B | 1:00 | 11:15 |
+| 10 | Limit 1: chromatic dispersion | Plot: خبو قدرة الـRF مقابل التردد | B | 1:00 | 12:15 |
+| 11 | Limit 2: noise vs distortion | Plot: SFDR | B | 1:00 | 13:15 |
+| 12 | Case: Maracanã and Mineirão | مخطط ملعب بالـRemote units | B | 1:00 | 14:15 |
+| 13 | When to choose analog RoF | Decision flow | B | 0:45 | 15:00 |
+| 14 | Questions | — | A+B | — | — |
+| A1–A4 | Appendix | RAU types، BER vs CSR، 5G/6G demo، References | — | — | — |
 
 ---
 
@@ -123,57 +126,27 @@
 
 ---
 
-## F. تعليمات التصميم لكل رسم وجدول
+## F. تعليمات التصميم (النسخة الثانية)
 
-**قواعد عامة طُبّقت في كل الشرائح**
-
-- **الخلفية والألوان:** خلفية بيضاء. نص أسود (1A1A1A). العناوين Navy (1F3A5F).
-- **رموز المسارات:**
-  - المسار الكهربائي: خط أسود رفيع (1.25 pt).
-  - المسار الضوئي: خط Navy سميك (3 pt).
-  - المسار اللاسلكي: خط رمادي متقطع.
-- **كتل التحويل:** كتل E/O وO/E وحدها مملوءة بالأزرق الفاتح (DCE6F2). بذلك يظهر موضع التحويل دون نص إضافي.
-- **مفتاح الرموز:** على كل رسم Legend للمسارات.
-- **الخطوط:** Calibri لكل النصوص. العنوان 28 pt. النص 13–14 pt. الجداول 12–14 pt. المصادر 10 pt.
-- **ما لم يُستخدم:** لا Gradients، ولا صور Stock، ولا زخارف، ولا خطوط تحت العناوين.
-- **المصادر:** كل شريحة تحمل سطر مصدر في أسفلها.
-
-**تعليمات خاصة بكل رسم وجدول**
-
-| الشريحة | العنصر | التعليمات |
-|---|---|---|
-| 1 | شريط تخطيطي | Central → E/O → Fiber → O/E → RAU → Air → UE. يُكتب نوع الإشارة على الوصلة الضوئية |
-| 2 | مخطط النطاق | Core –Backhaul (digital, packet)→ Central → [منطقة مظللة: Transport segment] → Remote points ~Air~> UE. يُذكر صراحة أن اتجاه الـDL هو المعروض |
-| 3 | جدول المصطلحات | عمودان (Term \| Meaning). صف الترويسة بخلفية رمادية فاتحة. ست مفاهيم متمايزة |
-| 4 | Signal path | منطقتان متقطعتان (Central site وRAU) وبينهما الـFiber. صف DL من اليسار إلى اليمين، وصف UL من اليمين إلى اليسار. الـDuplexer يمتد على الصفين. على الوصلة الضوئية: "intensity-modulated, λ1" و"λ2 or second fiber". تحت الرسم ثلاث خلايا: نقاط التحويل، وقاعدة 1 dB→2 dB، وأن WDM اختياري |
-| 5 | Architecture | BS hotel (3 مشغلين) → RF coax → Head-end (E/O وO/E) → نجمة ألياف ثنائية الاتجاه → RAU 1..n، والـRAU n متقطع. Backhaul معنون. لوحة جانبية تفصل Fronthaul عن Backhaul |
-| 6 | Types | ثلاثة صفوف بأعمدة ثابتة (Option، Central site، Signal on fiber، Remote unit). أول كتلة في الـRemote مظللة (O/E). يُذكر أن الـUplink محذوف للوضوح |
-| 7 | جدول + Line chart | جدول تعريف المقارنة (Systems، Endpoints، Signal، Medium، Criterion، Assumptions). Line chart أصلي من 0 إلى 400 m: Coax باللون الأسود، وRFoF بـLc=20 dB باللون Navy، وبـLc=40 dB باللون Navy الفاتح. محاور معنونة بالوحدات. صندوق نتيجة يذكر صيغة طول التعادل L* |
-| 8 | جدول المقارنة | سطر تعريف المقارنة فوق الجدول. 7 معايير × نظامان. يتضمن رقم CPRI المحسوب مع ذكر أنه محسوب |
-| 9 | جدول الفوائد | ثلاثة أعمدة (Benefit \| Holds when \| Does not imply) |
-| 10 | SFDR | رسم تخطيطي بلا قيم، ويُكتب ذلك صراحة. Fundamental بميل 1، وIMD3 بميل 3، وNoise floor متقطع، وسهم SFDR بينهما |
-| 11 | Case | BS hotel → Optical master units → 3 وحدات Fiber-fed. لوحتان: Reported وNot reported. صندوق "What the case supports" |
-| 12 | جدول الاستنتاجات | عمود Evidence يحيل إلى رقم الشريحة |
-| A3 | RAU types | DL وUL منفصلان. أسهم الـUplink تتجه نحو الـFiber |
-| A4 | Line chart | Data labels بخانة عشرية واحدة. العنوان "Higher value = lower BER" |
-| A5 | 5G/6G demo | فرعان من الـOptical coupler. Laser λ2 يدخل الـCoupler الثاني. UTC-PD يولّد f_THz |
-
-**الصور:** حُذفت الصور النقطية الخمس كلها (منخفضة الدقة أو ملتقطة كلقطات شاشة) وأعيد رسمها كأشكال Vector أصلية داخل PowerPoint. تبقى واضحة عند أي تكبير، وكل كتلة وتسمية فيها قابلة للتحرير.
+- **القاعدة:** كل شريحة فيها عنوان قصير، وسطر واحد هو الرسالة، ورسم أو Plot يشغل معظم المساحة، وسطر مصدر صغير. كل الشرح والأرقام التفصيلية في الـSpeaker Notes.
+- **الخط:** Arial في الشرائح، وLiberation Sans (المطابق لـArial) في الرسوم. العنوان 30 pt عريض أسود، والرسالة 18 pt رمادي داكن.
+- **الألوان:** أبيض وأسود فقط، مع لون واحد وظيفي: البرتقالي (D55E00 من لوحة Okabe-Ito المستخدمة في الأوراق العلمية) للمسار الضوئي ولكتل E/O وO/E. الأزرق (0072B2) يُستخدم فقط كسلسلة ثالثة في Plot التشتت. لا Navy ولا تعبئات ملونة ولا صناديق خلفية.
+- **الرسوم التخطيطية:** صناديق بإطار أسود رفيع. كتل التحويل بإطار برتقالي. الخط الكهربائي أسود رفيع، والضوئي برتقالي سميك، واللاسلكي رمادي متقطع.
+- **الـPlots:** محاور سوداء بلا إطار علوي وأيمن، وشبكة رمادية فاتحة جدًا، ووحدات على كل محور، ورقم على النقاط المهمة (مثل طول التعادل 90 m و181 m).
+- **الصور الفوتوغرافية:** لم تُستخدم، لأن مواقع الصور (Wikimedia) محجوبة في بيئة العمل. يمكن إضافة صورة حقيقية لشريحة الحالة (ملعب Maracanã) أو لكابل ألياف إذا توفرت صورة بترخيص مناسب.
 
 ---
 
-## G. الـAppendix المقترح (منفّذ في الملف)
+## G. الـAppendix (منفّذ في الملف)
 
-| رقم | المحتوى | سبب النقل إلى الـAppendix |
-|---|---|---|
-| A1 | Glossary (18 مصطلحًا) | مرجعي، ويغني عن شريحة المصطلحات الأصلية |
-| A2 | جدول الفقد عند 100 m و1 km و10 km، مصحح ويتضمن Lc | تفصيل رقمي يدعم الشريحة 7 |
-| A3 | أنواع الـRAU (BBoF وIFoF وRFoF)، معاد رسمها | تفصيل يتجاوز حاجة الحجة الرئيسية |
-| A4 | BER مقابل CSR | نتيجة تجريبية لوصلة واحدة |
-| A5 | عرض 5G + 6G | عرض بحثي، لا نشر تجاري |
-| A6 | حساب معدل CPRI ونتائج Li et al. | للأسئلة الكمية |
-| A7 | خريطة المعايير والمواصفات | للأسئلة عن المعايير |
-| A8 | المراجع | — |
+| رقم | المحتوى |
+|---|---|
+| A1 | أنواع الـRAU (BBoF وIFoF وRFoF) مع DL وUL |
+| A2 | Plot: BER مقابل CSR مع خط عتبة HD-FEC |
+| A3 | مخطط عرض 5G + 6G البحثي |
+| A4 | المراجع |
+
+حساب CPRI والمصطلحات وجدول المعايير انتقلت إلى الـSpeaker Notes وإلى هذا التقرير (القسمان B وH).
 
 ---
 
@@ -193,7 +166,7 @@
 لا. هو ينقل إشارة موجودة. سعة المستخدم يحددها الطيف والـSINR وعدد طبقات MIMO وكثافة الخلايا. قد يتيح RoF تكثيف نقاط الهوائي، لكن الزيادة تأتي من التكثيف لا من الألياف.
 
 **4. ما الفرق بين A-RoF وCPRI من حيث سعة النقل؟**
-CPRI: R = fs × 2 × N × 16/15 × line code. لحالة LTE 20 MHz (15-bit) الناتج 1228.8 Mb/s، وهو CPRI option 2. لحالة 100 MHz مع 64 هوائيًا الناتج ≈ 252 Gb/s قبل الـLine coding (محسوب). في A-RoF يشغل كل تيار هوائي تقريبًا عرض قناته الراديوية.
+CPRI: R = fs × 2 × N × 16/15 × line code. لحالة LTE 20 MHz (15-bit) الناتج 1228.8 Mb/s، وهو CPRI option 2. لحالة 100 MHz مع 64 هوائيًا الناتج ≈ 252 Gb/s قبل الـLine coding، أو ≈ 315 Gb/s مع 8B/10B (محسوب، وهي القيمة المرسومة في الشريحة 8). في A-RoF يشغل كل تيار هوائي تقريبًا عرض قناته الراديوية.
 - **الحدود:** eCPRI (Split 7.2x) يخفض المعدل، ويتناسب مع عدد الطبقات والحمل.
 - **المصدر:** CPRI V7.0.
 
@@ -241,577 +214,240 @@ Li et al. (2021) يبلّغون في سيناريو نمذجة أن EVM لـA-Ro
 ```text
 <!-- Slide number: 1 -->
 Radio over Fiber (RoF)
-Transport of radio waveforms over optical fiber: signal path, architectures, alternatives and limits
-Technical review · 15 minutes · two speakers
-Speaker A: problem, definition, signal path, architectures, RoF types
-Speaker B: comparisons, benefits and conditions, limitations, case, conclusions
-UE
-Optical fiber: analog radio waveform
-Central radio equipment
-E/O
-O/E
-Remote antenna unit
+Carrying radio signals over optical fiber
+Speaker A  ·  Speaker B  ·  15 minutes
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f01_title.png](Image 0)
+1
 
 ### Notes:
-Timing: 0:20 (Speaker A).
-Purpose: state the subject and the division of work between the two speakers.
-The strip at the bottom is the scope of the talk in one line: the optical segment between the central radio equipment and the remote antenna unit. Everything that follows is about that segment, its alternatives, and the conditions under which it is the right choice.
+0:20, Speaker A. Introduce the topic and the split: Speaker A covers problem, definition, signal path, architecture and RoF types; Speaker B covers the comparisons, limits, the deployment case and the conclusion.
 
 <!-- Slide number: 2 -->
-Problem and scope
-Engineering problem
-Scope of this talk
-Tunnels, stadiums and large buildings cannot be covered from one antenna site; radio power must be distributed over many antenna points.
-Radio equipment is often centralized (equipment room or base-station hotel) to share power, cooling, maintenance and multi-operator access.
-Question: how to carry the radio signal between the central equipment and each antenna point, over tens of metres to several kilometres, within a loss, noise, distortion and latency budget.
-In scope: the transport segment between central equipment and remote antenna units (fronthaul or DAS feeder), downlink and uplink.
-Out of scope: backhaul to the core network, air-interface design, spectrum and radio planning.
-Alternatives compared: passive coaxial feeder; digital fronthaul (CPRI / eCPRI).
-Transport segment: subject of this talk
-UE
-Core network
-Central radio equipment (base station / BBU)
-Remote antenna points (× N)
-Backhaul
-RF, IF or digital samples
-Air interface
-digital, packet
-depends on transport option
-Electrical (RF / IF / digital)
-Wireless (over the air)
-Downlink direction shown; uplink is the reverse path.
+The problem
+Large buildings and venues need many antenna points, fed from one equipment room.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f02_problem.png](Image 0)
 2
 
 ### Notes:
-Timing: 1:15 (Speaker A).
-Logic: start from the engineering need, not from the technology. The need is to distribute one radio signal to many antenna points that are physically far from the radio equipment. Centralization is a design choice with its own reasons (shared power, cooling, maintenance, multi-operator hosting); it is what creates the transport problem.
-Point out explicitly that backhaul is out of scope: RoF is not a backhaul technology, and confusing the two is a common error in the source material.
-The three alternatives named here are the only ones compared later; microwave point-to-point links are excluded because they serve backhaul, not an antenna feeder.
+1:00, Speaker A.
+Outdoor macro signals are attenuated by walls and distance, so coverage inside tunnels, stadiums and large buildings is provided by many indoor antenna points.
+The radio equipment is kept in one room (or a base-station hotel) to share power, cooling, maintenance and operator access.
+The engineering question is therefore: how do we carry the radio signal from that room to each antenna point, over tens of metres to kilometres, within a loss, noise and distortion budget?
+Scope: only this transport segment. Backhaul to the core network and air-interface design are out of scope.
 
 <!-- Slide number: 3 -->
-Definition: what RoF transports, and what it does not
-Radio over Fiber (RoF): an optical link that carries an analog radio waveform, at RF or IF, using electrical-to-optical (E/O) conversion at one end and optical-to-electrical (O/E) conversion at the other. The radio signal is generated and demodulated outside the link.
-
-| Term | Meaning used in this talk |
-| --- | --- |
-| RF | Waveform at the air-interface carrier frequency; radiated after amplification and filtering. |
-| IF | Same modulation on a lower carrier; the remote unit needs a mixer and local oscillator (LO) to reach RF. |
-| Baseband (I/Q) | Complex envelope centred at 0 Hz; reaching RF needs a DAC and up-conversion. Digital fronthaul carries it as samples. |
-| Fronthaul / backhaul | Fronthaul: central baseband or radio site ↔ remote radio or antenna unit. Backhaul: base station ↔ core network. |
-| Transport vs wireless capacity | Transport: what the link carries (bit rate, or analog bandwidth and dynamic range). Wireless: user throughput, set by spectrum, SINR, MIMO layers and cell density. |
-| Analog RoF vs digital fronthaul | Analog waveform on fiber, versus serialized digital samples (CPRI) or packets (eCPRI). Some literature calls the latter "digital RoF". |
-
-RoF moves the point where the radio signal is radiated. It does not add spectrum or air-interface capacity.
-Sources: ITU-T G.Suppl.55 (10/2025), Radio-over-fibre technologies and their applications; ITU-T G.9803 (2018), Radio over fibre systems; CPRI Specification V7.0 (2015); eCPRI Specification V2.0 (2019).
+What RoF is
+The radio waveform modulates light. A photodiode turns it back into the same radio signal.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f03_definition.png](Image 0)
+Sources: ITU-T G.Suppl.55 (10/2025); ITU-T G.9803 (2018).
 3
 
 ### Notes:
-Timing: 1:15 (Speaker A).
-Logic: fix the vocabulary before any claim is made. Every later comparison depends on these distinctions.
-Emphasize the boundary: in this talk 'RoF' means an analog waveform on the fiber. Digitized I/Q transport (CPRI) is called digital fronthaul. ITU-T G.Suppl.55 also describes digitized variants, and some papers call CPRI-type links 'digital RoF'; we keep the terms separate to avoid attributing analog properties to digital links and vice versa.
-The last line answers a frequent misconception: fiber capacity does not translate into wireless capacity. Users receive what the air interface delivers.
+1:15, Speaker A.
+Definition used in this talk: an optical link that carries an analog radio waveform, at RF or IF, with E/O conversion at one end and O/E at the other.
+Read the spectra left to right: the RF signal at f_RF; after the laser, the optical carrier with two sidebands at ±f_RF; after the photodiode, the original RF signal again.
+Key boundary: RoF transports a radio signal. It does not create spectrum or wireless capacity. Digitized I/Q transport (CPRI) is called digital fronthaul here, not RoF.
 
 <!-- Slide number: 4 -->
-End-to-end signal path: downlink and uplink
-Central site
-Single-mode fiber, length L
-Remote antenna unit (RAU)
-Downlink
-RF over the air to / from UE
-Base-station RF port (DL out)
-E/O: laser (direct) or laser + MZM
-O/E: photodiode
-Amp + BPF
-PA
-Duplexer
-intensity-modulated, λ1
-Base-station RF port (UL in)
-O/E: photodiode + RF amp
-E/O: laser diode
-LNA
-λ2 or second fiber
-Uplink
-Conversion points
-DL: E/O at central site, O/E at RAU. UL: E/O at RAU, O/E at central site. Each conversion adds noise and distortion.
-Optical loss vs RF loss
-Intensity modulation with direct detection: RF power ∝ (optical power)². 1 dB optical loss → 2 dB RF loss.
-Multiplexing
-DL and UL use separate fibers or wavelengths. WDM is optional; needed only when several links share one fiber.
-Electrical (RF / IF / digital)
-Optical (fiber)
-Wireless (over the air)
-Sources: C. H. Cox III, Analog Optical Links: Theory and Practice, Cambridge Univ. Press, 2004; ITU-T G.Suppl.55 (10/2025). MZM: Mach-Zehnder modulator; BPF: band-pass filter; PA: power amplifier; LNA: low-noise amplifier.
+Signal path: downlink and uplink
+Four optical conversions in a two-way link. Each adds noise and distortion.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f04_signal_path.png](Image 0)
+Source: C. H. Cox III, Analog Optical Links, Cambridge University Press, 2004.
 4
 
 ### Notes:
-Timing: 1:45 (Speaker A).
-Walk the downlink left to right, then the uplink right to left. Stop at each conversion point.
-Four optoelectronic conversions exist in a bidirectional link: two at each end. Each adds noise and distortion; this is why RoF link performance is not the same as fiber attenuation.
-Square-law detection: the photodiode current is proportional to optical power, and RF power is proportional to current squared. Therefore 1 dB of optical loss costs 2 dB of RF power (Cox, 2004). This is the correct way to translate fiber loss into the RF budget.
-WDM is drawn as optional on purpose: a point-to-point link with two fibers is a complete RoF link. WDM only reduces fiber count when several links share a cable.
-Downlink and uplink have different requirements: downlink is limited mainly by distortion at high drive levels; uplink by the link noise figure, because received signals are weak.
+1:30, Speaker A.
+Downlink: base-station RF output → E/O at the central site → fiber → O/E at the remote unit → power amplifier → duplexer → antenna.
+Uplink: antenna → duplexer → LNA → E/O at the remote unit → fiber → O/E at the central site → base-station RF input.
+Downlink and uplink use separate fibers or separate wavelengths. WDM is optional; it is only needed when several links share one fiber.
+With intensity modulation and direct detection, 1 dB of optical loss costs 2 dB of RF loss (square-law detection, Cox 2004). We use this on slide 7.
 
 <!-- Slide number: 5 -->
-Architecture: where the RoF link sits in the network
-Fronthaul: head-end ↔ RAU. This is the RoF link.
-Backhaul: base station ↔ core; digital, packet. Not RoF.
-Topology: star; one fiber pair or wavelength pair per RAU. WDM or cascaded RAUs reduce fiber count.
-RAU contents: O/E, E/O, RF amplifiers, filters, duplexer, power supply, alarms.
-C-RAN variant: BBU pool and RRHs; the link carries digital fronthaul instead.
-RAU 1
-Base-station hotel
-Head-end: RF combining, E/O (DL), O/E (UL)
-Operator A radio
-Core network
-RAU 2
-Backhaul
-Operator B radio
-Operator C radio
-RF (coax)
-RAU n
-Fiber links: analog RF, downlink and uplink
-Electrical (RF / IF / digital)
-Optical (fiber)
-Wireless (over the air)
-Generic multi-operator fiber DAS / centralized radio architecture. Sources: ITU-T G.Suppl.55 (10/2025); ITU-T G.9803 (2018).
+Where it sits in the network
+RoF is the fronthaul link from head-end to remote unit. Backhaul stays digital.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f05_architecture.png](Image 0)
 5
 
 ### Notes:
-Timing: 1:30 (Speaker A).
-Logic: place the link in a real deployment so the audience can separate fronthaul from backhaul.
-Backhaul is digital and packet-based; it is not affected by the choice of RoF. The RoF link is only the head-end-to-RAU segment.
-The head-end combines RF from several operators and bands before E/O conversion. This is what makes the analog link format-transparent, within its bandwidth and dynamic range.
-State the topology honestly: a star of point-to-point links. Fiber count can be reduced by WDM or by cascading remote units, but each option has its own cost and limits.
-Do not describe the RAU as passive: it contains lasers, photodiodes, amplifiers and a power supply.
-Same placement applies to centralized RAN (C-RAN): replace the head-end with a BBU pool and the RAU with an RRH; the link then carries digital fronthaul, not analog RoF.
+1:15, Speaker A.
+Operators' radios sit in a base-station hotel. The head-end combines their RF signals and converts them to optical (and back for the uplink).
+Fibers run in a star to the remote antenna units (RAUs). The RAU is not passive: it contains photodiode, laser, amplifiers, filters and needs power.
+Backhaul (base station to core) is a digital packet link and is not affected by the choice of RoF.
+Because the analog link carries whatever RF is fed into it, several operators and bands can share it, within its bandwidth and dynamic range.
 
 <!-- Slide number: 6 -->
-RoF types: what is on the fiber sets what the remote unit contains
-Option
-Central site
-Signal on fiber
-Remote unit: downlink functions
-RFoF
-analog RF
-Radio: DAC + up-conversion to RF
-E/O
-O/E
-Amp + BPF
-PA
-Analog RF waveform
-IFoF
-analog IF
-Radio: DAC + up-conversion to IF
-E/O
-O/E
-Mixer + LO
-Amp + BPF
-PA
-Analog IF waveform
-Digital fronthaul
-CPRI; not analog RoF
-BBU: PHY → I/Q samples
-Framer + optical TRx
-Optical TRx + deframer
-DAC
-Up-conv. + LO
-PA
-Serial digital I/Q samples
-Remote-unit complexity increases from RFoF to digital fronthaul (frequency conversion, then DAC/ADC and framing).
-Fiber transport requirement increases in the opposite direction: digitized samples need far more capacity than the analog waveform (slide 8).
-Electrical (RF / IF / digital)
-Optical (fiber)
-Uplink chains (LNA, E/O at remote; O/E at central) omitted for clarity.
+Three ways to use the fiber
+Simpler remote unit means analog signal on the fiber. Digital needs a full radio at the remote end.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f06_types.png](Image 0)
 6
 
 ### Notes:
-Timing: 1:30 (Speaker A). Handover to Speaker B after this slide (target elapsed time ≈ 7:15).
-Logic: the functional split decides two opposite quantities: remote-unit complexity and fiber transport requirement.
-RFoF: simplest remote downlink chain, but the optoelectronics must operate at the carrier frequency, which becomes difficult and costly at mmWave; dispersion effects also grow with RF frequency.
-IFoF: optoelectronics run at a lower frequency; the price is a mixer and a stable LO at every RAU.
-Digital fronthaul: robust to fiber impairments because it is digital, but the remote unit is a full radio (RRH) and the bit rate is high. This row is not RoF in the strict sense; it is shown because it is the main alternative.
-Analog baseband-over-fiber also appears in research literature (e.g. Electronics 9(11), 1785, 2020); it is listed in the appendix, not used in the main argument.
+1:30, Speaker A. Hand over to Speaker B after this slide (about 7:00 elapsed).
+RFoF: the fiber carries the radio signal at its final frequency. The remote unit only converts and amplifies. The optics must work at the carrier frequency.
+IFoF: the fiber carries a lower intermediate frequency. The remote unit needs a mixer and local oscillator.
+Digital fronthaul (CPRI): the fiber carries sampled I/Q bits. The remote unit is a complete radio with DAC, mixer and amplifier. This is not RoF, but it is the main alternative.
+Trade-off: remote-unit complexity rises from top to bottom; fiber capacity requirement rises in the opposite direction (slide 8).
 
 <!-- Slide number: 7 -->
-Comparison 1: passive coaxial feeder vs analog RFoF link
-
-### Chart: RF-to-RF loss vs length at 2.5 GHz (downlink, unamplified)
-
-| Category | Coax, LMR-400 class | RFoF, Lc = 20 dB (assumed) | RFoF, Lc = 40 dB (assumed) |
-| --- | --- | --- | --- |
-| 0 | 0.0 | 20.0 | 40.0 |
-| 50 | 11.1 | 20.0 | 40.0 |
-| 100 | 22.2 | 20.1 | 40.1 |
-| 150 | 33.3 | 20.1 | 40.1 |
-| 200 | 44.4 | 20.1 | 40.1 |
-| 250 | 55.5 | 20.1 | 40.1 |
-| 300 | 66.6 | 20.2 | 40.2 |
-| 350 | 77.7 | 20.2 | 40.2 |
-| 400 | 88.8 | 20.2 | 40.2 |
-
-| Item | Definition |
-| --- | --- |
-| Systems | (1) Passive coax, LMR-400 class, 50 Ω. (2) Analog RFoF link, no RF amplifiers. |
-| Endpoints | Head-end RF output port → remote antenna port (downlink) |
-| Signal | RF passband at 2.5 GHz |
-| Medium | Coax; G.652.D single-mode fiber at 1550 nm |
-| Criterion | RF-to-RF insertion loss versus length |
-| Assumptions | Coax 22.2 dB/100 m. Fiber 0.25 dB/km optical = 0.5 dB/km RF. RoF conversion loss Lc = 20–40 dB (assumed). |
-
-Result under these assumptions: break-even length L* = Lc / (0.222 − 0.0005 dB/m) ≈ 90 m (Lc = 20 dB) to 180 m (Lc = 40 dB). Below L*, passive coax has lower RF loss; above L*, RFoF does. Practical fiber DAS equipment adds RF gain at both ends, so the deciding metrics become noise figure, dynamic range and power consumption, not loss alone.
-Coax: Times Microwave LMR-400 datasheet, 22.2 dB/100 m at 2500 MHz. Fiber: G.652.D cable datasheets, ≤ 0.22–0.25 dB/km at 1550 nm. Lc range is an assumption: verify against the datasheet of the equipment under evaluation.
+Coax or fiber? It depends on length
+Fiber has lower RF loss only beyond a break-even length set by the conversion loss.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f07_loss.png](Image 0)
+Coax: Times Microwave LMR-400 datasheet (22.2 dB/100 m at 2500 MHz). Fiber: G.652.D cable datasheets. Conversion loss values are assumptions.
 7
 
 ### Notes:
-Timing: 1:45 (Speaker B).
-Logic: replace the original 'fiber loses 0.2 dB/km, coax loses 22 dB/100 m' argument, which compared a cable with a cable and ignored the conversion loss of the RoF link.
-Model: coax loss = 0.222 dB/m × L. RoF RF loss = Lc + 2 × 0.25 dB/km × L. The factor 2 is square-law detection.
-Lc (RF-to-RF conversion loss of an unamplified link) is device-specific. The 20–40 dB range is an assumption for illustration and must be replaced with the datasheet value of the equipment under evaluation. Cox (2004) treats link gain in detail; do not quote a single number without the device parameters.
-Break-even L* = Lc / (0.222 − 0.0005) ≈ 90 m for 20 dB and ≈ 180 m for 40 dB.
-Key message: loss alone does not decide. Commercial fiber DAS units include RF gain at both ends, so the decisive metrics are noise figure (uplink), dynamic range (multi-carrier downlink) and power consumption.
+1:45, Speaker B.
+Comparison defined: passive LMR-400-class coax versus an unamplified analog RFoF link, from the head-end RF port to the remote antenna port, downlink, 2.5 GHz.
+Coax loss: 22.2 dB per 100 m (datasheet). Fiber: 0.25 dB/km optical, which is 0.5 dB/km in RF terms (panel a).
+The RoF link also has a fixed RF-to-RF conversion loss. 20 dB and 40 dB are assumed values for illustration; the real value comes from the equipment datasheet.
+Break-even length = conversion loss / (0.222 − 0.0005) dB/m: about 90 m and 180 m.
+In practice both systems use amplifiers, so the deciding metrics become noise figure, dynamic range and power consumption, not loss alone.
 
 <!-- Slide number: 8 -->
-Comparison 2: analog RoF vs digital fronthaul (CPRI)
-Systems: analog RFoF / IFoF vs CPRI-type digital fronthaul · Endpoints: central site ↔ remote unit · Medium: single-mode fiber · Assumption: same radio carrier and antenna count
-
-| Criterion | Analog RoF (RFoF / IFoF) | Digital fronthaul (CPRI) |
-| --- | --- | --- |
-| Signal on fiber | Analog RF or IF waveform | Serialized time-domain I/Q samples (CPRI); packets (eCPRI) |
-| Transport requirement | Analog bandwidth ≈ radio channel bandwidth per antenna stream, plus required dynamic range | Bit rate = sample rate × 2 × bits per sample × overheads. 20 MHz LTE, 1 antenna: 1228.8 Mb/s (CPRI option 2) |
-| Scaling | One RF / IF channel (subcarrier or wavelength) per antenna stream | Linear in antenna count and sample rate. 100 MHz, 64 antennas ≈ 252 Gb/s before line coding (computed) |
-| Remote unit | O/E, E/O, amplifiers, filters (+ mixer and LO for IFoF) | DAC / ADC, framing, up / down-conversion, LO, amplifiers (RRH) |
-| Dominant impairments | Noise, nonlinear distortion, dispersion-induced RF power fading; accumulate along the link | Quantization noise, fixed by bit width; independent of length while bit errors are negligible |
-| Monitoring and interoperability | No native bit-level monitoring; largely vendor-specific. ITU-T G.9803 sets system requirements | Bit-level monitoring; CPRI / eCPRI specifications; O-RAN split 7.2x for multi-vendor |
-| Added latency | Fiber propagation ≈ 5 µs/km; no sampling or framing | Fiber propagation ≈ 5 µs/km + framing and buffering (implementation-specific) |
-
-Sources: CPRI Specification V7.0 (2015); eCPRI Specification V2.0 (2019); ITU-T G.9803 (2018) and Amd. 2 (2022); Y. Li et al., arXiv:2111.13851 (2021). Propagation delay from group index ≈ 1.47. eCPRI split 7.2x rate scales with MIMO layers and load, not antenna count.
+Analog RoF vs digital fronthaul
+Digital fronthaul line rate grows with every antenna and every MHz of bandwidth.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f08_cpri.png](Image 0)
+Source: CPRI Specification V7.0 (2015). Rates computed with the formula in the notes.
 8
 
 ### Notes:
-Timing: 1:30 (Speaker B).
-Logic: this is the comparison that matters for mobile networks, because digital fronthaul is the incumbent for C-RAN.
-CPRI rate, worked: 20 MHz LTE uses 30.72 Msample/s. 30.72 × 2 (I and Q) × 15 bits × 16/15 (control words) × 10/8 (8B/10B line code) = 1228.8 Mb/s, which is CPRI line-rate option 2.
-Scaling example (computed with the same formula, no compression, before line coding): 100 MHz NR at 122.88 Msample/s gives 3.93 Gb/s per antenna; 64 antennas give about 252 Gb/s. This scaling is the argument for analog transport or for eCPRI splits.
-Fairness: digital fronthaul quality is set by quantization and is independent of fiber length until bit errors appear; analog quality degrades along the link. Analog links also lack bit-level monitoring.
-Li et al. (2021) report a modeled case in which A-RoF needs much less fiber bandwidth but exceeds the 3GPP EVM limit for 256-QAM; see appendix A6. Those figures are scenario-specific.
+1:30, Speaker B.
+CPRI rate = sample rate × 2 (I and Q) × 15 bits × 16/15 (control) × 10/8 (8B/10B line coding).
+20 MHz LTE, one antenna: 30.72 Msps → 1228.8 Mb/s, which is CPRI option 2. 100 MHz NR at 122.88 Msps → 4.9 Gb/s per antenna, about 315 Gb/s for 64 antennas.
+An analog link instead carries each antenna stream in roughly its radio bandwidth, so the fiber capacity needed is much smaller.
+What analog gives up: quality degrades along the link (noise, distortion, dispersion), there is no bit-level monitoring, and interfaces are mostly vendor-specific. Digital links are robust and standardized (CPRI, eCPRI, O-RAN 7.2x).
+eCPRI with split 7.2x reduces the digital rate; it scales with MIMO layers and traffic, not antenna count.
 
 <!-- Slide number: 9 -->
-Benefits, and the conditions under which they hold
-
-| Benefit | Holds when | Does not imply |
-| --- | --- | --- |
-| Low fiber attenuation (≈ 0.2–0.25 dB/km cabled SMF at 1550 nm) | Link is longer than the break-even length set by conversion loss (slide 7) | Low RF-to-RF loss for short links; conversion loss is fixed |
-| Fiber span immune to electromagnetic pickup; galvanic isolation | Dielectric cable is used | Immunity of RAU electronics or of the air interface |
-| Centralized radio equipment (base-station hotel, multi-operator) | RFoF or IFoF; head-end hosts all baseband and radio processing | No remote power or maintenance: RAU has lasers, amplifiers, power supply |
-| Format transparency: multi-band, multi-operator, multi-technology on one link | Within optoelectronic bandwidth, linearity and dynamic range | Any number of bands: all carriers share one link's dynamic range |
-| Small, light cable | Compared with coax of similar loss over the same route | Lower total installed cost: site-specific, not established here |
-| Low added transport latency (≈ 5 µs/km, no sampling or framing) | Analog link | Lower end-to-end RAN latency, which baseband processing dominates |
-
-Sources: G.652.D cable datasheets (attenuation); ITU-T G.Suppl.55 (10/2025); C. H. Cox III, Analog Optical Links, 2004.
+Benefit: low fiber loss
+Fiber loss is a fraction of a dB per km, and the fiber itself does not pick up interference.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f09_attenuation.png](Image 0)
+Datasheet points: Prysmian G.652.D cable. Model curve is illustrative (Rayleigh scattering and infrared absorption).
 9
 
 ### Notes:
-Timing: 1:00 (Speaker B).
-Logic: each benefit is stated with its condition and with what it does not imply. This directly corrects the original slides, which attributed fiber properties to the whole RoF system.
-Row 1 connects to slide 7: low fiber attenuation helps only once the link is longer than the break-even length.
-Row 3: centralization is real, but the RAU still has active optoelectronics and needs power. 'Simple RAU' is true only relative to an RRH, and only for RFoF.
-Row 4: transparency is the main practical reason fiber DAS is used for multi-operator venues. All carriers share one link's dynamic range, so adding carriers reduces per-carrier headroom.
-Row 5: cost is site-specific. No general cost claim is made; it requires a bill of materials for a given site.
+1:00, Speaker B.
+Standard single-mode fiber (G.652.D): cabled maximum around 0.36 dB/km at 1310 nm and 0.22 dB/km at 1550 nm (vendor datasheets). The curve is an illustrative physical model, the squares are datasheet limits.
+Conditions on each benefit:
+– Low loss matters only above the break-even length (slide 7).
+– The fiber is immune to electromagnetic pickup; the remote electronics and the radio link are not.
+– Central equipment is easier to share and maintain, but the remote unit still needs power.
+– Cost is site-specific and is not claimed here.
 
 <!-- Slide number: 10 -->
-Limitations and engineering trade-offs
-Noise and dynamic range: laser RIN, shot noise and receiver thermal noise set a noise floor; the link noise figure limits uplink sensitivity and the number of carriers per link.
-Nonlinear distortion: laser and modulator nonlinearity creates intermodulation; higher drive improves SNR until distortion dominates (SFDR).
-Chromatic dispersion: with double-sideband intensity modulation, RF power fades at frequency- and length-dependent nulls. Mitigation: 1310 nm, single-sideband modulation, IFoF.
-Fiber and topology: one fiber pair or wavelength pair per RAU; new fiber needs civil works and permits.
-Remote power: RAU lasers and amplifiers need local power or hybrid fiber–copper cable.
-Operations: no bit-level performance monitoring on the analog link; interfaces largely vendor-specific.
-Noise vs distortion: SFDR (illustrative, no values)
-RF output (dB)
-Fundamental (slope 1)
-SFDR
-IMD3 (slope 3)
-Noise floor
-RF input power (dB)
-Sources: C. H. Cox III, Analog Optical Links, 2004; U. Gliese et al., IEEE Trans. Microwave Theory Tech. 44(10), 1996 (dispersion-induced RF power fading); D. Wake et al., J. Lightwave Technol. 28(16), 2010.
+Limit 1: chromatic dispersion
+At 1550 nm the received RF power fades at certain frequencies. Sub-6 GHz bands are barely affected.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f10_dispersion.png](Image 0)
+Model: U. Gliese et al., IEEE Trans. Microwave Theory Tech. 44(10), 1996. Curves computed for standard SMF.
 10
 
 ### Notes:
-Timing: 1:15 (Speaker B).
-Logic: the limitations are physical mechanisms, not general disadvantages.
-Noise vs distortion is the central analog trade-off. The figure is the standard spurious-free dynamic range construction: the fundamental rises 1 dB per dB of input, third-order intermodulation rises 3 dB per dB. SFDR is the input range between the noise floor and the point where IMD3 reaches the noise floor. It is illustrative and has no values.
-Dispersion: with double-sideband intensity modulation, the two optical sidebands experience different phase shifts in a dispersive fiber; after detection they interfere and the RF power fades at specific frequency-length combinations (Gliese et al., 1996). This is a design constraint at mmWave on 1550 nm, not a reason to avoid RoF at sub-6 GHz over short indoor runs.
-Remote power is often underestimated in venue projects; hybrid fiber-copper cables are one documented solution (slide 11).
+1:00, Speaker B.
+With double-sideband intensity modulation, the two optical sidebands travel at slightly different speeds. After detection they interfere, and the RF power drops to zero at specific frequency–length combinations.
+Computed with P ∝ cos²(π·L·D·λ²·f²/c), D = 17 ps/(nm·km). At 10 km the first null is near 19 GHz.
+Mitigation: operate at 1310 nm (near-zero dispersion), use single-sideband modulation, or use IFoF.
+This matters for mmWave over km-scale fiber, not for indoor sub-6 GHz systems.
 
 <!-- Slide number: 11 -->
-Documented case: Maracanã and Mineirão stadiums (2014)
-Reported
-Fiber-fed remote unit
-Optical DAS for five mobile operators, 2G / 3G / 4G; combined stadium capacity over 141,000 (Axell Wireless, June 2014).
-Maracanã: hybrid fiber + DC power cable feeding remote radio units; 2G, 3G, 4G and iDEN (RFS, 10 June 2014).
-Base-station hotel: 5 operators, 2G / 3G / 4G
-Optical master units: RF ↔ optical
-Fiber-fed remote unit
-RF
-Fiber-fed remote unit
-Fiber (hybrid fiber + DC power cable at Maracanã)
-Not reported
-Stands, concourses, public areas
-Link budgets, noise figure, measured capacity, cost against alternatives.
-Transport format per subsystem (analog RF or digital).
-Electrical (RF / IF / digital)
-Optical (fiber)
-What the case supports: feasibility of a multi-operator, multi-technology fiber-fed DAS in large venues. It does not support quantitative performance or cost claims.
-Sources: Axell Wireless press release, June 2014 (prnewswire.co.uk); RFS press release, 10 June 2014 (globenewswire.com); PBE Axell case study "Brazilian Sports Stadiums" (equipment names: verification required).
+Limit 2: noise vs distortion
+An analog link has a limited usable power window.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f11_sfdr.png](Image 0)
+Too little signal
+lost in noise
+ 
+Too much signal
+intermodulation appears
+ 
+SFDR
+the usable window between the two
+Illustrative, no values. Source: C. H. Cox III, Analog Optical Links, 2004.
 11
 
 ### Notes:
-Timing: 1:00 (Speaker B).
-Logic: one documented deployment, with a clear statement of what the sources do and do not show.
-Facts as reported by the vendors: Axell Wireless (June 2014) supplied optical DAS for venues including Maracanã and Mineirão, combined capacity over 141,000, five operators, 2G/3G/4G. RFS (10 June 2014) reported its HYBRIFLEX hybrid fiber and DC power cable at Maracanã, feeding remote radio units, for 2G, 3G, 4G and iDEN.
-The PBE Axell case study cited in the original deck names Optical Master Units converting RF to optical; that page could not be retrieved during this review, so treat equipment model names as requiring verification.
-Do not claim performance from this case. The sources are vendor press releases; they contain no link budgets, noise figures or capacity measurements. They also do not state whether every subsystem used analog RF transport or digital fronthaul to the remote radios.
+1:00, Speaker B.
+Laser noise, photodiode shot noise and receiver thermal noise set a noise floor. Laser and modulator nonlinearity creates intermodulation, which rises 3 dB for every 1 dB of input.
+The spurious-free dynamic range is the span between the two. It limits uplink sensitivity and how many carriers can share one link.
+Other practical limits: one fiber pair or wavelength pair per remote unit, power needed at every remote unit, and no bit-level performance monitoring on an analog link.
 
 <!-- Slide number: 12 -->
-Conclusions
-
-| # | Conclusion | Evidence |
-| --- | --- | --- |
-| 1 | RoF transports an existing radio signal. It does not add spectrum or air-interface capacity. | Slide 3 |
-| 2 | Against passive coax at 2.5 GHz, unamplified RFoF has lower RF loss only beyond a break-even length set by conversion loss (≈ 90–180 m under the stated assumptions). | Slide 7 |
-| 3 | Against digital fronthaul, analog RoF needs far less fiber capacity and no DAC/ADC at the remote unit, at the cost of noise, distortion, dispersion and weaker monitoring. | Slides 8, 10 |
-| 4 | Documented deployments include multi-operator fiber-fed DAS in large venues; vendor sources support feasibility, not performance. | Slide 11 |
-| 5 | Selection criteria: fiber availability, link length, number of bands and operators, required noise figure and dynamic range, remote power, monitoring needs. | Slides 7–10 |
-
+Case: Maracanã and Mineirão (2014)
+Fiber-fed distributed antenna system for five operators, 2G / 3G / 4G.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f12_stadium.png](Image 0)
+Sources: Axell Wireless press release, June 2014; RFS press release, 10 June 2014. Schematic only.
 12
 
 ### Notes:
-Timing: 1:00 (Speaker B). Then open questions.
-Logic: each conclusion is traceable to a slide. If challenged, go back to that slide.
-Avoid generalizing beyond the evidence: the break-even length depends on the assumed conversion loss; the deployment case is evidence of feasibility only.
-The final row is a decision checklist, not a recommendation: whether RoF is appropriate depends on the site.
+1:00, Speaker B.
+Reported by the vendors: Axell Wireless (June 2014) supplied optical DAS for stadiums including Maracanã and Mineirão, combined capacity over 141,000, five operators, 2G/3G/4G. RFS (10 June 2014) supplied HYBRIFLEX hybrid fiber and DC power cable at Maracanã.
+Not reported: link budgets, noise figures, measured capacity, cost comparison, or whether each subsystem carried analog RF or digital fronthaul.
+So the case shows feasibility of a multi-operator fiber DAS in a large venue. It does not support performance or cost claims.
+The figure is a schematic, not the real floor plan.
 
 <!-- Slide number: 13 -->
-Questions
-Reference material in the appendix:
-A1 Glossary
-A2 Loss figures at 100 m, 1 km and 10 km
-A3 Remote antenna unit types (BBoF, IFoF, RFoF)
-A4 Measured BER versus carrier-to-sideband ratio
-A5 Research demonstration: 5G-NR and a candidate 6G signal on one fiber
-A6 Fronthaul bit-rate calculation and reported analog vs digital comparison
-A7 Standards and specifications
-A8 References
+When to choose analog RoF
+RoF moves the antenna point closer to users. It does not add spectrum.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f13_decision.png](Image 0)
 13
 
 ### Notes:
-Use appendix slides A1–A8 for detailed answers. Expected questions and bounded answers are in the review report, section H.
+1:00, Speaker B.
+Conclusions, each tied to a slide:
+1. RoF transports an existing radio signal; it does not add spectrum or wireless capacity (slide 3).
+2. Against passive coax, it has lower loss only beyond a break-even length (slide 7).
+3. Against digital fronthaul, it needs far less fiber capacity and a simpler remote unit, at the cost of noise, distortion, dispersion and weaker monitoring (slides 8, 10, 11).
+4. Documented use: multi-operator fiber DAS in large venues (slide 12).
+The flow on the slide is the decision checklist that follows from these points.
 
 <!-- Slide number: 14 -->
-A1 Glossary
-
-| Term | Meaning |
-| --- | --- |
-| BBU | Baseband unit: PHY / MAC processing at the central site |
-| RRH / RRU | Remote radio head / unit: DAC/ADC, frequency conversion, PA/LNA; fed by digital fronthaul |
-| RAU | Remote antenna unit of an analog RoF link: O/E, E/O, RF amplifiers, filters |
-| DAS | Distributed antenna system: one signal source, many antenna points |
-| WDM | Wavelength-division multiplexing: several wavelengths on one fiber |
-| MZM | Mach-Zehnder modulator: external intensity modulator |
-| IM/DD | Intensity modulation, direct detection |
-| LO | Local oscillator, used for frequency conversion |
-| SMF | Single-mode fiber (ITU-T G.652 family) |
-
-| Term | Meaning |
-| --- | --- |
-| TIA / PA / LNA | Transimpedance / power / low-noise amplifier |
-| RIN | Relative intensity noise of the laser |
-| SFDR | Spurious-free dynamic range |
-| CSR | Optical carrier-to-sideband power ratio |
-| BER | Bit error ratio |
-| EVM | Error vector magnitude; 3GPP limit for 256-QAM: 3.5 % |
-| CPRI | Common Public Radio Interface: serial digital I/Q fronthaul |
-| eCPRI | Packet-based fronthaul; supports intra-PHY splits |
-| C-RAN | Centralized RAN: baseband pooled at a central site |
-
-EVM limit: 3GPP TS 38.104, base-station transmitter EVM requirements.
+Questions
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/f01_title.png](Image 0)
 14
 
 ### Notes:
-Reference only.
+Appendix slides cover RAU types, a measured BER curve, a 5G/6G research demo, and references.
 
 <!-- Slide number: 15 -->
-A2 Loss figures at 100 m, 1 km and 10 km (2.5 GHz)
-
-| Length | Coax, LMR-400 class (22.2 dB/100 m) | Fiber, optical loss (0.25 dB/km) | RFoF, RF loss = Lc + 2 × optical loss |
-| --- | --- | --- | --- |
-| 100 m | 22.2 dB | 0.025 dB | Lc + 0.05 dB |
-| 1 km | 222 dB (extrapolated; not built passively) | 0.25 dB | Lc + 0.5 dB |
-| 10 km | 2,220 dB (extrapolated; not built passively) | 2.5 dB | Lc + 5 dB |
-
-Lc: fixed RF-to-RF conversion loss of the unamplified RoF link; device-specific. Verification required against equipment datasheets.
-Optical-to-RF factor of 2 applies to intensity modulation with direct detection (square-law photodetection).
-Splice and connector losses are excluded from both columns.
-Sources: Times Microwave LMR-400 datasheet; G.652.D cable datasheets; C. H. Cox III, Analog Optical Links, 2004.
+A1  Remote unit types
+What the remote unit must contain for each signal on the fiber.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/a_rau.png](Image 0)
+Redrawn from: Electronics 9(11), 1785 (2020), Fig. 3. DOI: 10.3390/electronics9111785.
 15
 
 ### Notes:
-Corrects the original table, which compared cable loss only and omitted the RoF conversion loss Lc.
-The coax values at 1 km and 10 km are linear extrapolations; such runs are not built with passive coax. Coax systems over such distances (e.g. HFC cable TV) use in-line amplifiers, so 'no amplifier could recover it' is not a valid statement; the valid statement is that a passive coax feeder is impractical at these lengths.
+BBoF here means analog baseband over fiber, as in the source figure. It is different from digital fronthaul.
 
 <!-- Slide number: 16 -->
-A3 Remote antenna unit types: BBoF, IFoF, RFoF
-Downlink: fiber → antenna
-Uplink: antenna → fiber
-BBoF
-On fiber: Baseband
-PD
-TIA
-MOD
-Mixer + LO
-PA
-LD
-DEMOD
-Mixer + LO
-LNA
-IFoF
-On fiber: IF
-PD
-TIA
-Mixer + LO
-PA
-LD
-Mixer + LO
-LNA
-RFoF
-On fiber: RF
-PD
-TIA
-PA
-LD
-LNA
-PD: photodiode · TIA: transimpedance amplifier · MOD / DEMOD: modulator / demodulator · LO: local oscillator · PA: power amplifier · LNA: low-noise amplifier · LD: laser diode. Shaded blocks are O/E (downlink) and E/O (uplink).
-Redrawn from: "Radio over Fiber: An Alternative Broadband Network Technology for IoT," Electronics 9(11), 1785 (2020), Fig. 3. DOI: 10.3390/electronics9111785.
+A2  Measured BER vs carrier-to-sideband ratio
+One experimental link: 10 km fiber + 3 m wireless. Best result near 25 dB.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/a_csr.png](Image 0)
+Redrawn from: M. U. Hadi and G. Murtaza, Electronics 12(1), 64 (2023), Fig. 6. Values read from the published plot.
 16
 
 ### Notes:
-Redrawn from Electronics 9(11), 1785 (2020), Fig. 3, with downlink and uplink chains separated.
-In this figure, BBoF denotes analog baseband over fiber: the RAU needs a modulator, mixer and LO. This differs from digital fronthaul, which carries sampled baseband.
-RFoF has no frequency conversion at the RAU but still contains a photodiode, TIA, PA, LNA and a laser diode, plus power supply.
+Values are approximate readings from the published plot (verification against the paper required). At low CSR distortion dominates; at high CSR noise dominates. The result applies only to the tested link.
 
 <!-- Slide number: 17 -->
-A4 Measured BER versus carrier-to-sideband ratio (one experimental link)
-
-### Chart: Higher value = lower BER
-
-| Category | −log10(BER) |
-| --- | --- |
-| 0 | 2.0 |
-| 5 | 3.0 |
-| 10 | 3.5 |
-| 15 | 3.5 |
-| 20 | 4.3 |
-| 25 | 4.4 |
-| 30 | 3.3 |
-
-Setup: 10 km SMF plus 3 m wireless link (as reported).
-Trend: BER improves up to CSR ≈ 25 dB, then degrades at 30 dB.
-Mechanism: distortion dominates at low CSR; noise dominates at high CSR.
-Limit: result applies to the tested link only.
-Status: values read from the published plot; verification required.
-Redrawn from: M. U. Hadi and G. Murtaza, "Fibre Wireless Distributed Antenna Systems for 5G and 6G Services," Electronics 12(1), 64 (2023), Fig. 6. DOI: 10.3390/electronics12010064.
+A3  Research demo: 5G + candidate 6G on one fiber
+Laboratory demonstration, not a deployed system.
+![/tmp/claude-0/-home-user-AboOmar12/e9733a54-4f82-5489-a2a7-ad29d271dc42/scratchpad/figs/a_demo.png](Image 0)
+Redrawn and simplified from: M. U. Hadi and G. Murtaza, Electronics 12(1), 64 (2023), Fig. 2.
 17
 
 ### Notes:
-Values are approximate readings from the published plot, carried over from the original deck. They were not re-checked against the paper during this review: verification required.
-Interpretation: at low CSR the optical sidebands are strong relative to the carrier and distortion dominates; at high CSR most optical power is in the unmodulated carrier and the detected signal is weak relative to noise. The optimum is specific to the tested link (10 km SMF plus 3 m wireless).
-Note that −log10(BER) ≈ 2 corresponds to BER ≈ 1e-2, above common hard-decision FEC thresholds (≈ 3.8e-3).
+The 6G branch uses a second laser and a UTC photodiode to generate a THz signal by optical beating. '6G' is the authors' label.
 
 <!-- Slide number: 18 -->
-A5 Research demonstration: 5G-NR and a candidate 6G signal on one fiber
-PIN photodiode (O/E)
-LPF
-5G RAU (antenna side)
-5G-NR: 5 × 50 MHz at IF1 = 1.14 GHz
-Tx (E/O)
-Optical coupler
-fiber
-Candidate 6G at IF2 = 12 GHz
-BPF (optical)
-Optical coupler
-UTC-PD (O/E)
-6G RAU: THz output (f_THz)
-Beat of λ1 sideband and λ2 → f_THz
-Laser λ2
-Electrical (RF / IF / digital)
-Optical (fiber)
-Research demonstration of simultaneous transport. No deployment, cost or capacity conclusion follows from it.
-Redrawn and simplified from: M. U. Hadi and G. Murtaza, Electronics 12(1), 64 (2023), Fig. 2. DOI: 10.3390/electronics12010064.
-18
-
-### Notes:
-Laboratory demonstration, not a deployed system. '6G' is the authors' label for a candidate THz signal.
-Mechanism of the 6G branch: the IF2 signal is carried on the optical sideband; a second laser at λ2 is combined, and a uni-travelling-carrier photodiode (UTC-PD) mixes the two optical tones so that the beat frequency falls in the THz range (photonic up-conversion).
-Block names follow the published figure.
-
-<!-- Slide number: 19 -->
-A6 Fronthaul bit-rate calculation and reported analog vs digital comparison
-CPRI-type rate per antenna-carrier
-R = fs × 2 (I, Q) × N bits × 16/15 (control words) × line-code factor (10/8 for 8B/10B)
-
-| Case | fs | N | Antennas | Result |
-| --- | --- | --- | --- | --- |
-| LTE 20 MHz | 30.72 Msample/s | 15 | 1 | 1228.8 Mb/s with 8B/10B (CPRI option 2) |
-| NR 100 MHz | 122.88 Msample/s | 15 | 1 | 3.93 Gb/s before line coding |
-| NR 100 MHz | 122.88 Msample/s | 15 | 64 | ≈ 252 Gb/s before line coding |
-
-Reported modeled comparison (Li et al., 2021)
-Up to 40× lower fiber bandwidth for analog RoF than digital RoF in one modeled case: 16 × 16 MIMO, 28 GHz carrier, 256-QAM.
-In a modeled 256-QAM case, analog RoF EVM ≈ 8 % against the 3.5 % 3GPP limit; the digital case met the limit.
-Both results are scenario-specific. Values carried over from the original deck: verification against the paper required.
-Sources: CPRI Specification V7.0 (2015); 3GPP TS 38.104; Y. Li, Q. Xie, M. El-Hajjar, L. Hanzo, "Analogue Radio Over Fiber for Next-Generation RAN: Challenges and Opportunities," arXiv:2111.13851 (2021).
-19
-
-### Notes:
-The CPRI calculation uses the specification's sample rates and overheads; check figures before quoting a different configuration.
-Li et al. figures were carried over from the original deck; the arXiv full text could not be retrieved during this review. Verify the 40× and 8 % values against the paper before presenting them.
-
-<!-- Slide number: 20 -->
-A7 Standards and specifications
-
-| Document | Body | Scope relevant to this talk |
-| --- | --- | --- |
-| G.9803 (2018), Amd. 1 (2019), Amd. 2 (2022) | ITU-T | Radio over fibre systems: system requirements; Amd. 2 covers RoF architectures and requirements for IMT-2020 mobile fronthaul |
-| G.Suppl.55 (10/2025) | ITU-T | Radio-over-fibre technologies and their applications; earlier editions 07/2015, 12/2021, 12/2023 |
-| G.652 | ITU-T | Characteristics of standard single-mode optical fibre and cable |
-| CPRI Specification V7.0 (2015) | CPRI industry consortium | Serial digital I/Q interface between baseband and radio equipment |
-| eCPRI Specification V2.0 (2019) | CPRI industry consortium | Packet-based fronthaul with intra-PHY functional splits |
-| O-RAN fronthaul (split 7.2x) | O-RAN Alliance | Multi-vendor control, user and synchronization plane specification |
-| TS 38.104 | 3GPP | NR base-station RF requirements, including transmitter EVM limits |
-
-Edition dates of G.Suppl.55 from the ITU-T recommendation page. Amendment content of G.9803 as cited in the original deck: verification against ITU-T text recommended.
-20
-
-### Notes:
-Reference only. CPRI and eCPRI are industry specifications, not ITU-T standards.
-
-<!-- Slide number: 21 -->
-A8 References
+A4  References
 C. H. Cox III, Analog Optical Links: Theory and Practice, Cambridge University Press, 2004.
-U. Gliese, S. Nørskov, T. N. Nielsen, "Chromatic dispersion in fiber-optic microwave and millimeter-wave links," IEEE Trans. Microwave Theory Tech., 44(10), 1996.
-D. Wake, A. Nkansah, N. J. Gomes, "Radio over fiber link design for next generation wireless systems," J. Lightwave Technol., 28(16), 2010.
-ITU-T G.9803 (2018), Radio over fibre systems; Amendment 1 (2019); Amendment 2 (2022).
-ITU-T G-series Supplement 55 (10/2025), Radio-over-fibre (RoF) technologies and their applications.
-ITU-T G.652, Characteristics of a single-mode optical fibre and cable.
+U. Gliese, S. Nørskov, T. N. Nielsen, Chromatic dispersion in fiber-optic microwave and millimeter-wave links, IEEE T-MTT 44(10), 1996.
+ITU-T G.9803 (2018), Radio over fibre systems, with Amendments 1 (2019) and 2 (2022).
+ITU-T G-series Supplement 55 (10/2025), Radio-over-fibre technologies and their applications.
+ITU-T G.652, single-mode optical fibre and cable; Prysmian G.652.D cable datasheet.
 CPRI Specification V7.0 (2015); eCPRI Specification V2.0 (2019).
-3GPP TS 38.104, NR; Base Station (BS) radio transmission and reception.
-Y. Li, Q. Xie, M. El-Hajjar, L. Hanzo, "Analogue Radio Over Fiber for Next-Generation RAN: Challenges and Opportunities," arXiv:2111.13851, 2021.
-"Radio over Fiber: An Alternative Broadband Network Technology for IoT," Electronics 9(11), 1785, 2020. DOI: 10.3390/electronics9111785.
-M. U. Hadi, G. Murtaza, "Fibre Wireless Distributed Antenna Systems for 5G and 6G Services," Electronics 12(1), 64, 2023. DOI: 10.3390/electronics12010064.
-Times Microwave Systems, LMR-400 coaxial cable datasheet.
-Axell Wireless press release on Brazilian stadium coverage, June 2014; RFS press release on Maracanã, 10 June 2014; PBE Axell case study "Brazilian Sports Stadiums".
-21
-
-### Notes:
-The SolFinder Research video used in the original deck is a secondary source; it is not cited for any technical claim in this revision.
+Y. Li, Q. Xie, M. El-Hajjar, L. Hanzo, Analogue Radio Over Fiber for Next-Generation RAN, arXiv:2111.13851, 2021.
+Radio over Fiber: An Alternative Broadband Network Technology for IoT, Electronics 9(11), 1785, 2020.
+M. U. Hadi, G. Murtaza, Fibre Wireless Distributed Antenna Systems for 5G and 6G Services, Electronics 12(1), 64, 2023.
+Times Microwave Systems, LMR-400 datasheet.
+Axell Wireless press release, June 2014; RFS press release, 10 June 2014.
+18
 ```
