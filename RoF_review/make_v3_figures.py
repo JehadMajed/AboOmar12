@@ -165,36 +165,30 @@ def f_arch():
     span(ax, 1.48, bx - 0.32, 3.62, "Backhaul")
     span(ax, bx + 0.32, 9.6, 3.62, "Fronthaul")
 
-    # ---------------- access lane (bottom): feeder -> 1:N splitter -> one drop fiber per premise
+    # ---------------- access lane (bottom): feeder -> splitter -> fibers fanned out to premises (as in source figure)
     ax.add_patch(FancyBboxPatch((3.75, 0.05), 6.95, 1.85, boxstyle="round,pad=0.03,rounding_size=0.25",
                                 fill=False, ec="#C48BC4", lw=1.3, ls=(0, (5, 3)), zorder=0))
     ax.text(3.88, 1.66, "Optical Access Network", ha="left", va="bottom", **B)
-    yin = 1.28
-    ax.plot([1.48, 1.48, 4.55], [1.3, yin, yin], **FIB)
-    ax.text(2.95, yin + 0.06, "optical fiber", ha="center", **L)
-    # splitter symbol: one input, four outputs
-    sx0, sx1 = 4.55, 5.05
-    lanes = [1.10, 1.22, 1.34, 1.46]          # BS, office, home, shop (nearest premise on lowest lane)
-    ax.add_patch(FancyBboxPatch((sx0, 1.02), sx1 - sx0, 0.52, boxstyle="round,pad=0,rounding_size=0.05",
-                                fc="#E8F5E9", ec="#2E7D32", lw=1.6, zorder=5))
-    for yy in lanes:
-        ax.plot([sx0 + 0.06, sx1 - 0.04], [yin, yy], color="#2E7D32", lw=1.1, zorder=6)
-    ax.add_patch(Circle((sx0 + 0.06, yin), 0.025, fc="#2E7D32", ec="none", zorder=7))
-    ax.text((sx0 + sx1) / 2, 0.97, "Optical splitter\n(1:N)", ha="center", va="top", linespacing=1.1, **B)
+    sx, sy = 4.9, 1.15
+    ax.plot([1.48, 1.48, sx], [1.3, 1.22, sy], **FIB)
+    ax.text(2.95, 1.33, "optical fiber", ha="center", **L)
     # premises
-    lattice_tower(ax, 5.8, 0.32, h=0.55, color="black", lw=1.4)
+    bs = (5.9, 0.32)
+    lattice_tower(ax, bs[0], bs[1], h=0.55, color="black", lw=1.4)
     for r in (0.13, 0.22):
-        ax.add_patch(matplotlib.patches.Arc((5.8, 0.82), r * 2, r * 2, theta1=135, theta2=225, color="black", lw=1.3))
-        ax.add_patch(matplotlib.patches.Arc((5.8, 0.82), r * 2, r * 2, theta1=-45, theta2=45, color="black", lw=1.3))
-    office(ax, 6.95, 0.3)
-    house(ax, 8.15, 0.32)
-    shop(ax, 9.4, 0.32)
-    drops = [(5.8, 0.88), (7.16, 1.0), (8.42, 1.0), (9.61, 0.67)]
-    for (x, ytop), yy in zip(drops, lanes):
-        ax.plot([sx1, x, x], [yy, yy, ytop], color="#2B2B2B", lw=1.3, zorder=3)
-    ax.text(7.7, 1.5, "drop fibers", ha="center", **L)
-    for x, t in ((5.8, "Base station (BS)"), (7.16, "Office building"), (8.42, "Home"), (9.61, "Small business")):
-        ax.text(x, 0.1, t, ha="center", **L)
+        ax.add_patch(matplotlib.patches.Arc((bs[0], 0.82), r * 2, r * 2, theta1=135, theta2=225, color="black", lw=1.3))
+        ax.add_patch(matplotlib.patches.Arc((bs[0], 0.82), r * 2, r * 2, theta1=-45, theta2=45, color="black", lw=1.3))
+    office(ax, 7.8, 0.95)
+    house(ax, 9.3, 0.42)
+    shop(ax, 7.2, 0.3)
+    for tx, ty in ((bs[0], 0.87), (7.8, 1.27), (9.3, 0.6)):
+        ax.plot([sx, tx], [sy, ty], color="#2B2B2B", lw=1.3, zorder=3)
+    ax.add_patch(Circle((sx, sy), 0.07, fc="#2E7D32", ec="black", lw=0.8, zorder=6))
+    ax.text(sx - 0.05, sy - 0.33, "Splitter", ha="center", **B)
+    ax.text(bs[0], 0.1, "Base station (BS)", ha="center", **L)
+    ax.text(7.41, 0.1, "Small business", ha="center", **L)
+    ax.text(8.45, 1.27, "Office building", ha="left", va="center", **L)
+    ax.text(9.57, 0.12, "Home", ha="center", **L)
 
     # ---------------- legend
     ax.text(0.1, 0.62, "BBU: Baseband Unit\nBS: Base Station\nRRH: Remote Radio Head", va="center", linespacing=1.35, **B)
