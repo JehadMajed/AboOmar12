@@ -136,13 +136,12 @@ def f_arch():
     server(ax, 1.2, 2.45)               # top  -> backhaul
     server(ax, 2.38, 1.9)               # right
     server(ax, 1.2, 1.3)                # bottom -> feeder
-    ax.text(cx + 0.08, cy + 0.02, "Metro / core\nnetwork", ha="center", va="center", linespacing=1.1, **L)
+    ax.text(cx + 0.08, cy + 0.02, "Core\nnetwork", ha="center", va="center", linespacing=1.1, **L)
 
     # ---------------- mobile lane (top): backhaul -> BBU pool -> fronthaul -> RRHs
     yt = 3.0
     ax.add_patch(FancyBboxPatch((3.75, 2.2), 6.95, 1.3, boxstyle="round,pad=0.03,rounding_size=0.25",
                                 fc="#F7F7F7", ec="#B0B0B0", lw=1.1, ls=(0, (5, 3)), zorder=0))
-    ax.text(3.9, 2.3, "C-RAN", ha="left", va="bottom", **B)
     ax.plot([1.48, 1.48, 4.9], [2.96, 3.15, 3.15], **FIB)
     ax.plot([4.9, 4.9], [3.15, yt], **FIB)
     ax.text(3.0, 3.21, "optical fiber", ha="center", **L)
