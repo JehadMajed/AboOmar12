@@ -503,7 +503,7 @@ Benefits, and the conditions under which they hold
 | Low fiber attenuation (≈ 0.2–0.25 dB/km cabled SMF at 1550 nm) | Link is longer than the break-even length set by conversion loss (slide 7) | Low RF-to-RF loss for short links; conversion loss is fixed |
 | Fiber span immune to electromagnetic pickup; galvanic isolation | Dielectric cable is used | Immunity of RAU electronics or of the air interface |
 | Centralized radio equipment (base-station hotel, multi-operator) | RFoF or IFoF; head-end hosts all baseband and radio processing | No remote power or maintenance: RAU has lasers, amplifiers, power supply |
-| Format transparency: multi-band, multi-operator, multi-technology on one link | Within optoelectronic bandwidth, linearity and dynamic range | Unlimited bands: all carriers share one link's dynamic range |
+| Format transparency: multi-band, multi-operator, multi-technology on one link | Within optoelectronic bandwidth, linearity and dynamic range | Any number of bands: all carriers share one link's dynamic range |
 | Small, light cable | Compared with coax of similar loss over the same route | Lower total installed cost: site-specific, not established here |
 | Low added transport latency (≈ 5 µs/km, no sampling or framing) | Analog link | Lower end-to-end RAN latency, which baseband processing dominates |
 
