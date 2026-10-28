@@ -40,86 +40,158 @@ def save(fig, name):
 
 
 # =============================================================== architecture
-def cube(ax, x, y, s=0.32):
-    d = s * 0.45
-    ax.add_patch(Polygon([[x, y], [x + s, y], [x + s, y + s], [x, y + s]], fc="#B4B4B4", ec="#555", lw=1, zorder=4))
-    ax.add_patch(Polygon([[x, y + s], [x + s, y + s], [x + s + d, y + s + d], [x + d, y + s + d]], fc="#D6D6D6", ec="#555", lw=1, zorder=4))
-    ax.add_patch(Polygon([[x + s, y], [x + s + d, y + d], [x + s + d, y + s + d], [x + s, y + s]], fc="#8F8F8F", ec="#555", lw=1, zorder=4))
-    return (x + (s + d) / 2, y + (s + d) / 2)
+def server(ax, x, y, w=0.36, h=0.5, d=0.16):
+    """Grey 3-D network node, (x, y) = front-bottom-left corner. Returns a connection point."""
+    ax.add_patch(Polygon([[x, y], [x + w, y], [x + w, y + h], [x, y + h]], fc="#A9A9A9", ec="#5A5A5A", lw=1, zorder=4))
+    ax.add_patch(Polygon([[x, y + h], [x + w, y + h], [x + w + d, y + h + d * 0.7], [x + d, y + h + d * 0.7]],
+                         fc="#D3D3D3", ec="#5A5A5A", lw=1, zorder=4))
+    ax.add_patch(Polygon([[x + w, y], [x + w + d, y + d * 0.7], [x + w + d, y + h + d * 0.7], [x + w, y + h]],
+                         fc="#7E7E7E", ec="#5A5A5A", lw=1, zorder=4))
+    return x + w / 2, y + h / 2
 
 
-def tower(ax, x, y, h=0.75, color="#C0392B"):
-    ax.plot([x - 0.1, x, x + 0.1], [y, y + h, y], color=color, lw=1.4, zorder=4)
-    for k in np.linspace(0.15, 0.75, 4):
-        w = 0.1 * (1 - k)
-        ax.plot([x - w, x + w], [y + k * h, y + k * h], color=color, lw=0.8, zorder=4)
+def lattice_tower(ax, x, y, h=0.9, color="#C0392B", lw=1.3):
+    w = 0.13
+    ax.plot([x - w, x, x + w], [y, y + h, y], color=color, lw=lw, zorder=5)
+    n = 5
+    for k in range(1, n):
+        f = k / n
+        yy = y + f * h
+        ww = w * (1 - f)
+        ax.plot([x - ww, x + ww], [yy, yy], color=color, lw=lw * 0.6, zorder=5)
+        f2 = (k + 1) / n
+        ax.plot([x - ww, x + w * (1 - f2)], [yy, y + f2 * h], color=color, lw=lw * 0.4, zorder=5)
+    # antenna panels near the top
+    for s in (-1, 1):
+        ax.add_patch(Rectangle((x + s * 0.05 - 0.02, y + h * 0.72), 0.04, 0.16, fc="white", ec=color, lw=0.9, zorder=6))
 
 
-def phone(ax, x, y):
-    ax.add_patch(Rectangle((x, y), 0.17, 0.08, angle=30, fc="#1F4E9E", ec="#0B2A5C", lw=0.8, zorder=5))
+def handset(ax, x, y, ang=25):
+    ax.add_patch(FancyBboxPatch((x, y), 0.2, 0.09, boxstyle="round,pad=0.01,rounding_size=0.02",
+                                fc="#1E3F8A", ec="#0B1F4D", lw=0.8, zorder=6,
+                                transform=matplotlib.transforms.Affine2D().rotate_deg_around(x, y, ang) + ax.transData))
+    ax.add_patch(Rectangle((x + 0.03, y + 0.02), 0.13, 0.05, fc="#6C8FD6", ec="none", zorder=7,
+                           transform=matplotlib.transforms.Affine2D().rotate_deg_around(x, y, ang) + ax.transData))
+
+
+def database(ax, x, y):
+    ax.add_patch(FancyBboxPatch((x - 0.3, y - 0.32), 0.6, 0.66, boxstyle="round,pad=0.02,rounding_size=0.08",
+                                fc="white", ec="#4A4A4A", lw=1.4, zorder=4))
+    w, t = 0.36, 0.12
+    for k in range(3):
+        yy = y - 0.2 + k * 0.14
+        ax.add_patch(Rectangle((x - w / 2, yy), w, t, fc="#2F6FD6", ec="none", zorder=5))
+        ax.add_patch(Ellipse((x, yy), w, 0.08, fc="#2457B0", ec="#1A3F86", lw=0.6, zorder=5))
+    ax.add_patch(Ellipse((x, y - 0.2 + 2 * 0.14 + t), w, 0.08, fc="#7FA8EE", ec="#1A3F86", lw=0.6, zorder=6))
+
+
+def office(ax, x, y):
+    w, h, d = 0.42, 0.62, 0.14
+    ax.add_patch(Polygon([[x, y], [x + w, y], [x + w, y + h], [x, y + h]], fc="#5DA9E9", ec="#2B6CB0", lw=1, zorder=4))
+    ax.add_patch(Polygon([[x + w, y], [x + w + d, y + 0.08], [x + w + d, y + h + 0.08], [x + w, y + h]], fc="#3B82C4", ec="#2B6CB0", lw=1, zorder=4))
+    ax.add_patch(Polygon([[x, y + h], [x + w, y + h], [x + w + d, y + h + 0.08], [x + d, y + h + 0.08]], fc="#A7D3F5", ec="#2B6CB0", lw=1, zorder=4))
+    for i in range(4):
+        for j in range(3):
+            ax.add_patch(Rectangle((x + 0.05 + j * 0.12, y + 0.07 + i * 0.14), 0.08, 0.09, fc="#E8F4FD", ec="none", zorder=5))
+
+
+def house(ax, x, y, s=1.0, wall="#F6E3C6", roof="#C0392B"):
+    w, h = 0.55 * s, 0.38 * s
+    ax.add_patch(Rectangle((x, y), w, h, fc=wall, ec="#8D6E63", lw=1, zorder=4))
+    ax.add_patch(Polygon([[x - 0.07 * s, y + h], [x + w + 0.07 * s, y + h], [x + w / 2, y + h + 0.3 * s]],
+                         fc=roof, ec="#7B241C", lw=1, zorder=4))
+    ax.add_patch(Rectangle((x + w * 0.4, y), w * 0.2, h * 0.55, fc="#8D6E63", ec="none", zorder=5))
+    for xx in (x + w * 0.1, x + w * 0.7):
+        ax.add_patch(Rectangle((xx, y + h * 0.45), w * 0.2, h * 0.3, fc="#BFE1F7", ec="#8D6E63", lw=0.6, zorder=5))
+
+
+def shop(ax, x, y):
+    ax.add_patch(Rectangle((x, y), 0.42, 0.26, fc="#F6E3C6", ec="#8D6E63", lw=1, zorder=4))
+    for k in range(4):
+        ax.add_patch(Polygon([[x - 0.03 + k * 0.12, y + 0.26], [x + 0.09 + k * 0.12, y + 0.26], [x + 0.09 + k * 0.12, y + 0.34], [x - 0.03 + k * 0.12, y + 0.34]],
+                             fc="#D9534F" if k % 2 == 0 else "white", ec="#A93226", lw=0.6, zorder=5))
+    ax.add_patch(Rectangle((x + 0.06, y), 0.12, 0.17, fc="#8D6E63", ec="none", zorder=5))
+    ax.add_patch(Rectangle((x + 0.24, y + 0.08), 0.12, 0.1, fc="#BFE1F7", ec="#8D6E63", lw=0.6, zorder=5))
+
+
+def span(ax, x1, x2, y, text, color="#D9534F"):
+    """Dashed bracket over a link segment with a boxed label (Backhaul / Fronthaul)."""
+    ax.plot([x1, x1, x2, x2], [y - 0.12, y, y, y - 0.12], color=color, lw=1.3, ls=(0, (3, 2)), zorder=3)
+    xm = (x1 + x2) / 2
+    ax.add_patch(Rectangle((xm - 0.65, y - 0.02), 1.3, 0.32, fc="white", ec=color, lw=1.4, zorder=4))
+    ax.text(xm, y + 0.14, text, ha="center", va="center", fontsize=13, fontweight="bold", zorder=5)
 
 
 def f_arch():
     fig, ax = canvas(11, 4.1)
-    # metro ring
-    for dy, c in ((0.0, "#6A8FD8"), (0.03, "#E57373"), (0.06, "#F3A6C8")):
-        ax.add_patch(Ellipse((1.9, 2.15 + dy), 2.9, 0.95, fill=False, ec=c, lw=1.6, zorder=2))
-    n1 = cube(ax, 0.3, 2.0); n2 = cube(ax, 1.55, 2.55); n3 = cube(ax, 2.95, 1.95); n4 = cube(ax, 1.25, 1.45)
-    # optical fiber to BBU pool
-    bx, by = 5.0, 3.05
-    ax.plot([n3[0] + 0.1, bx - 0.2], [n3[1], by], color="#333", lw=1.4, zorder=3)
-    ax.text(3.75, 2.95, "Optical\nFiber", ha="center", fontsize=12, fontweight="bold")
-    ax.add_patch(FancyBboxPatch((bx - 0.24, by - 0.25), 0.48, 0.58, boxstyle="round,pad=0.03", fc="white", ec="#555", lw=1.2, zorder=4))
-    for k in range(3):
-        ax.add_patch(Ellipse((bx, by - 0.12 + k * 0.14), 0.3, 0.1, fc="#2F6FD6", ec="#1A4A9A", lw=0.8, zorder=5))
-        ax.add_patch(Rectangle((bx - 0.15, by - 0.12 + k * 0.14 - 0.05), 0.3, 0.05, fc="#2F6FD6", ec="none", zorder=5))
-    ax.text(bx, by - 0.5, "BBU Pool", ha="center", fontsize=12, fontweight="bold")
-    # backhaul / fronthaul labels
-    for x0, t in ((3.6, "Backhaul"), (5.85, "Fronthaul")):
-        ax.add_patch(Rectangle((x0, 3.7), 1.25, 0.3, fc="white", ec="#D9534F", lw=1.3, zorder=4))
-        ax.text(x0 + 0.625, 3.85, t, ha="center", va="center", fontsize=12, fontweight="bold", zorder=5)
-    ax.plot([4.85, 5.85], [3.85, 3.85], color="#D9534F", lw=1.2, ls=(0, (3, 2)))
-    ax.plot([bx, bx], [3.85, by + 0.36], color="#D9534F", lw=1.2, ls=(0, (3, 2)))
+    B = dict(fontsize=13, fontweight="bold")
+    L = dict(fontsize=11, style="italic", color="#444444")
+    FIB = dict(color="#2B2B2B", lw=1.6, zorder=3)
+
+    # ---------------- core / metro ring (left)
+    cx, cy = 1.45, 2.15
+    for dy, c in ((-0.035, "#5B7FD6"), (0.0, "#E06666"), (0.035, "#C27BD1")):
+        ax.add_patch(Ellipse((cx, cy + dy), 2.4, 1.05, fill=False, ec=c, lw=1.6, zorder=2))
+    server(ax, 0.07, 1.9)               # left
+    server(ax, 1.2, 2.45)               # top  -> backhaul
+    server(ax, 2.38, 1.9)               # right
+    server(ax, 1.2, 1.3)                # bottom -> feeder
+    ax.text(cx + 0.08, cy + 0.02, "Metro / core\nnetwork", ha="center", va="center", linespacing=1.1, **L)
+
+    # ---------------- mobile lane (top): backhaul -> BBU pool -> fronthaul -> RRHs
+    yt = 3.0
+    ax.add_patch(FancyBboxPatch((3.75, 2.2), 6.95, 1.3, boxstyle="round,pad=0.03,rounding_size=0.25",
+                                fc="#F7F7F7", ec="#B0B0B0", lw=1.1, ls=(0, (5, 3)), zorder=0))
+    ax.text(3.9, 2.3, "C-RAN", ha="left", va="bottom", **B)
+    ax.plot([1.48, 1.48, 4.9], [2.96, 3.15, 3.15], **FIB)
+    ax.plot([4.9, 4.9], [3.15, yt], **FIB)
+    ax.text(3.0, 3.21, "optical fiber", ha="center", **L)
+    bx = 5.2
+    database(ax, bx, yt)
+    ax.text(bx, yt - 0.55, "BBU Pool", ha="center", **B)
     # RRH cells
-    ax.add_patch(Ellipse((7.1, 3.3), 1.9, 0.75, fc="#DCEFD8", ec="none", zorder=1))
-    ax.add_patch(Ellipse((8.55, 2.65), 1.9, 0.75, fc="#FCEFC7", ec="none", zorder=1))
-    tower(ax, 6.95, 2.95); tower(ax, 8.35, 2.3)
-    ax.plot([bx + 0.24, 6.95], [by, 3.3], color="#333", lw=1.4, zorder=3)
-    ax.plot([bx + 0.24, 8.35], [by - 0.05, 2.75], color="#333", lw=1.4, zorder=3)
-    ax.text(6.95, 2.72, "RRH", ha="center", fontsize=12, fontweight="bold")
-    ax.text(8.35, 2.07, "RRH", ha="center", fontsize=12, fontweight="bold")
-    phone(ax, 6.4, 3.4); phone(ax, 7.45, 3.35); phone(ax, 8.85, 2.85); phone(ax, 8.0, 2.45)
-    ax.text(7.75, 3.1, "User", fontsize=12, fontweight="bold")
-    ax.text(9.15, 2.55, "User", fontsize=12, fontweight="bold")
-    # optical access network
-    ax.add_patch(FancyBboxPatch((4.15, 0.12), 5.1, 1.75, boxstyle="round,pad=0.05,rounding_size=0.3", fill=False,
-                                ec="#B57BB5", lw=1.3, ls=(0, (4, 3)), zorder=1))
-    sx, sy = 5.0, 1.35
-    ax.plot([n4[0], sx], [n4[1], sy], color="#333", lw=1.4, zorder=3)
-    ax.add_patch(Circle((sx, sy), 0.05, fc="#2E7D32", ec="black", lw=0.8, zorder=5))
-    ax.text(sx - 0.15, sy - 0.32, "Splitter", ha="center", fontsize=12, fontweight="bold")
-    # building
-    ax.plot([sx, 7.35], [sy, 1.5], color="#333", lw=1.2)
-    ax.add_patch(Rectangle((7.35, 1.2), 0.45, 0.6, fc="#6FA8DC", ec="#2A5D8A", lw=1, zorder=4))
-    for i in range(3):
-        for j in range(2):
-            ax.add_patch(Rectangle((7.42 + j * 0.2, 1.27 + i * 0.18), 0.1, 0.1, fc="white", ec="none", zorder=5))
-    # house
-    ax.plot([sx, 8.55], [sy, 0.95], color="#333", lw=1.2)
-    ax.add_patch(Rectangle((8.55, 0.7), 0.5, 0.35, fc="#F4E1C1", ec="#8D6E63", lw=1, zorder=4))
-    ax.add_patch(Polygon([[8.48, 1.05], [9.12, 1.05], [8.8, 1.3]], fc="#C0392B", ec="#7B241C", lw=1, zorder=4))
-    # base station
-    ax.plot([sx, 5.85], [sy, 0.75], color="#333", lw=1.2)
-    tower(ax, 5.85, 0.3, h=0.55, color="black")
-    for r in (0.12, 0.2):
-        ax.add_patch(matplotlib.patches.Arc((5.85, 0.85), r * 2, r * 2, theta1=30, theta2=150, color="black", lw=1.2))
-    ax.text(5.85, 0.1, "BS", ha="center", fontsize=12, fontweight="bold")
-    ax.add_patch(Rectangle((6.35, 0.3), 0.32, 0.2, fc="#F4E1C1", ec="#8D6E63", lw=1, zorder=4))
-    ax.add_patch(Polygon([[6.32, 0.5], [6.7, 0.5], [6.51, 0.62]], fc="#C0392B", ec="#7B241C", lw=1, zorder=4))
-    ax.text(4.6, 0.35, "Optical Access\nNetwork", ha="center", fontsize=12, fontweight="bold")
-    # legend
-    ax.text(0.3, 0.75, "BBU: Baseband Unit\nBS: Base Station\nRRH: Remote Radio Head", fontsize=12,
-            fontweight="bold", va="center", linespacing=1.3)
+    cells = [(6.6, "#DDEFD9"), (8.85, "#FBEFC9")]
+    for x, col in cells:
+        ax.add_patch(Ellipse((x + 0.25, 2.95), 1.95, 0.85, fc=col, ec="none", zorder=1))
+        lattice_tower(ax, x, 2.55, h=0.8)
+        ax.text(x, 2.32, "RRH", ha="center", va="bottom", **B)
+        handset(ax, x - 0.7, 3.22, 30)
+        handset(ax, x + 0.5, 3.25, 25)
+        ax.text(x + 0.35, 2.62, "User", ha="left", **B)
+    ax.plot([bx + 0.3, 6.6], [yt, yt], **FIB)
+    ax.plot([6.6, 8.85], [yt, yt], **FIB)
+    ax.text(5.95, yt - 0.25, "optical fiber", ha="center", **L)
+    span(ax, 1.48, bx - 0.32, 3.62, "Backhaul")
+    span(ax, bx + 0.32, 9.6, 3.62, "Fronthaul")
+
+    # ---------------- access lane (bottom): feeder -> splitter -> drop fibers -> premises
+    yb = 1.18
+    ax.add_patch(FancyBboxPatch((3.75, 0.05), 6.95, 1.6, boxstyle="round,pad=0.03,rounding_size=0.25",
+                                fill=False, ec="#C48BC4", lw=1.3, ls=(0, (5, 3)), zorder=0))
+    ax.text(3.88, 1.42, "Optical Access Network", ha="left", va="bottom", **B)
+    ax.plot([1.48, 1.48, 4.6], [1.3, yb, yb], **FIB)
+    ax.text(2.95, yb + 0.06, "optical fiber", ha="center", **L)
+    sx = 4.6
+    ax.add_patch(Circle((sx, yb), 0.07, fc="#2E7D32", ec="black", lw=0.8, zorder=6))
+    ax.text(sx, yb - 0.32, "Splitter", ha="center", **B)
+    ax.plot([sx, 9.61], [yb, yb], **FIB)
+    # premises: x position, drawer, label
+    lattice_tower(ax, 5.8, 0.32, h=0.55, color="black", lw=1.4)
+    for r in (0.13, 0.22):
+        ax.add_patch(matplotlib.patches.Arc((5.8, 0.82), r * 2, r * 2, theta1=135, theta2=225, color="black", lw=1.3))
+        ax.add_patch(matplotlib.patches.Arc((5.8, 0.82), r * 2, r * 2, theta1=-45, theta2=45, color="black", lw=1.3))
+    office(ax, 6.95, 0.3)
+    house(ax, 8.15, 0.32)
+    shop(ax, 9.4, 0.32)
+    drops = [(5.8, 0.88), (7.16, 0.98), (8.42, 1.0), (9.61, 0.67)]
+    for x, ytop in drops:
+        ax.plot([x, x], [yb, ytop], color="#2B2B2B", lw=1.2, zorder=3)
+        ax.add_patch(Circle((x, yb), 0.03, fc="#2B2B2B", ec="none", zorder=4))
+    for x, t in ((5.8, "Base station (BS)"), (7.16, "Office building"), (8.42, "Home"), (9.61, "Small business")):
+        ax.text(x, 0.1, t, ha="center", **L)
+
+    # ---------------- legend
+    ax.text(0.1, 0.62, "BBU: Baseband Unit\nBS: Base Station\nRRH: Remote Radio Head", va="center", linespacing=1.35, **B)
     save(fig, "arch.png")
 
 
