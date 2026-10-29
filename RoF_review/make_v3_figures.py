@@ -17,7 +17,8 @@ from matplotlib.patches import (Circle, Ellipse, FancyArrowPatch, FancyBboxPatch
                                 Rectangle)
 
 OUT = sys.argv[1] if len(sys.argv) > 1 else "figs_v3"
-os.makedirs(OUT, exist_ok=True)
+if __name__ == "__main__":
+    os.makedirs(OUT, exist_ok=True)
 plt.rcParams.update({"font.family": "Liberation Sans", "font.size": 12})
 DPI = 300
 
@@ -372,5 +373,6 @@ def f_rau():
     save(fig, "rau.png")
 
 
-f_arch(); f_block(); f_rau()
-print("written to", OUT)
+if __name__ == "__main__":
+    f_arch(); f_block(); f_rau()
+    print("written to", OUT)
