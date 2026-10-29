@@ -46,23 +46,29 @@ source(s, "Photo: ceiling DAS antenna, Silva et al., Sensors 23, 4579 (2023). Ch
 s = new_slide("Use 2: C-RAN Fronthaul",
               "Baseband moves away from the antenna site and is pooled. The price is fronthaul: CPRI 20 MHz x1 antenna = 1.23 Gb/s; 100 MHz x64 antennas ≈ 315 Gb/s (CPRI V7.0 formula).")
 figure(s, F2 / "li2021_fig1_ran_evolution.png", 0.6, 1.3, 12.1, 3.4)
-textbox(s, 0.6, 4.9, 12.1, 1.8, [
+textbox(s, 0.6, 4.75, 12.1, 2.1, [
     B("C-RAN: ", "baseband pooled centrally; radio heads stay at the antennas."),
     B("Gain: ", "shared processing, easier cell coordination, less equipment at each site."),
     B("Price: ", "fronthaul. CPRI: 1.23 Gb/s for 20 MHz × 1 antenna; ≈ 315 Gb/s for 100 MHz × 64 antennas."),
+    B("Analog RoF option: ", "up to 40× less fronthaul bandwidth, but EVM ≈ 8 % fails the 3.5 % limit for 256-QAM."),
 ], 16, gap=6)
-source(s, "Source: " + LI + ", Fig. 1. Rates: CPRI Specification V7.0.")
+source(s, "Source: " + LI + ", Fig. 1 and Sec. V. Rates: CPRI Specification V7.0. EVM limit: 3GPP TS 38.104.")
 
-# 4. Analog vs digital: the trade-off
-s = new_slide("Analog vs. Digital Fronthaul: Bandwidth vs. Quality",
-              "Left: aggregated fiber bandwidth, A-RoF far lower (up to 40-fold in the modeled case). Right: EVM; A-RoF ~8 % meets 64-QAM but not the 3.5 % 256-QAM limit (3GPP TS 38.104); D-RoF meets it. This is the core trade-off of the talk.")
-figure(s, F2 / "li2021_fig3_bandwidth.jpg", 0.6, 1.3, 4.6, 3.5)
-figure(s, F2 / "li2021_fig5_evm.jpg", 5.4, 1.3, 7.3, 3.5)
-textbox(s, 0.6, 5.0, 12.1, 1.7, [
-    B("Analog RoF: ", "up to 40× less fiber bandwidth, simpler radio head, but EVM ≈ 8 % (fails the 3.5 % limit for 256-QAM)."),
-    B("Digital fronthaul: ", "robust and standardized (CPRI / eCPRI), but bandwidth- and power-hungry."),
-], 16, gap=6)
-source(s, "Source: " + LI + ", Figs. 3 and 5. EVM limit: 3GPP TS 38.104.")
+# 4. Applications
+s = new_slide("Where Else Is RoF Used?",
+              "Broader view beyond DAS and C-RAN. One sentence per card. Note for experts: commercial 5G fronthaul is mainly digital today; analog RoF fronthaul is at research and trial stage.")
+cards = [("Venues & transport", "Stadiums, airports, metros and tunnels: multi-operator fiber DAS."),
+         ("5G / 6G fronthaul", "Analog RoF studied for mmWave and massive MIMO; commercial fronthaul is mainly digital today."),
+         ("Public safety", "In-building coverage for emergency-responder radio."),
+         ("Defense & aerospace", "Antenna remoting, radar and satellite ground stations: light, low-loss, EMI-immune."),
+         ("Radio astronomy", "RF-over-fiber in the SKA-low radio-telescope receiver.")]
+for k, (h, t) in enumerate(cards):
+    col, row = k % 3, k // 3
+    x = 0.6 + col * 4.1 if row == 0 else 2.65 + col * 4.1
+    y = 1.45 + row * 2.45
+    box(s, x, y, 3.9, 2.2)
+    textbox(s, x + 0.12, y + 0.1, 3.66, 2.0, [[(h, True)], [(t,)]], 17, gap=8)
+source(s, "Sources: ITU-T G.9803 Amd. 2 (2022); Perini et al., J. Astron. Telesc. Instrum. Syst. 8(1), 011016 (2022); NYC subway DAS (Boldyn Networks, 2023).")
 
 # 5. Limitations
 s = new_slide("Limitations & Mitigation", "Five rows only; details on request.")
@@ -92,8 +98,20 @@ refs = ["Y. Li, Q. Xie, M. El-Hajjar, L. Hanzo, arXiv:2111.13851, 2021.",
         "J. da L. A. Silva et al., Sensors 23, 4579, 2023.",
         "V. Quintuna Rodriguez et al., arXiv:2101.04216, 2021.",
         "CPRI V7.0 (2015); eCPRI V2.0 (2019); 3GPP TS 38.104; ITU-T G.9803 (2018) & Amd. 2 (2022).",
-        "Times Microwave Systems, LMR-400 datasheet."]
+        "Times Microwave Systems, LMR-400 datasheet.",
+        "F. Perini et al., \"Radio frequency over fiber technology for SKA-low receiver,\" JATIS 8(1), 011016, 2022."]
 textbox(s, 0.6, 1.4, 12.1, 5.3, [[(f"{k + 1}. {r}",)] for k, r in enumerate(refs)], 16, gap=8)
+
+# 4. Analog vs digital: the trade-off
+s = new_slide("Backup: Analog vs. Digital Fronthaul, the Evidence",
+              "Left: aggregated fiber bandwidth, A-RoF far lower (up to 40-fold in the modeled case). Right: EVM; A-RoF ~8 % meets 64-QAM but not the 3.5 % 256-QAM limit (3GPP TS 38.104); D-RoF meets it. This is the core trade-off of the talk.")
+figure(s, F2 / "li2021_fig3_bandwidth.jpg", 0.6, 1.3, 4.6, 3.5)
+figure(s, F2 / "li2021_fig5_evm.jpg", 5.4, 1.3, 7.3, 3.5)
+textbox(s, 0.6, 5.0, 12.1, 1.7, [
+    B("Analog RoF: ", "up to 40× less fiber bandwidth, simpler radio head, but EVM ≈ 8 % (fails the 3.5 % limit for 256-QAM)."),
+    B("Digital fronthaul: ", "robust and standardized (CPRI / eCPRI), but bandwidth- and power-hungry."),
+], 16, gap=6)
+source(s, "Source: " + LI + ", Figs. 3 and 5. EVM limit: 3GPP TS 38.104.")
 
 # Backup
 s = new_slide("Backup: Functional Splits", "For RAN experts: the lower the split, the more is central and the higher the fronthaul rate. Analog RoF sits below Option 8.")
