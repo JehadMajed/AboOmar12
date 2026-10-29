@@ -116,7 +116,7 @@ def f_das_concept():
     ax.add_patch(Polygon([[bx - 0.1, 0.3 + n * fh], [bx + bw + 0.1, 0.3 + n * fh], [bx + bw + 0.1, 0.3 + n * fh + 0.08], [bx - 0.1, 0.3 + n * fh + 0.08]], fc="#9E9E9E", ec="#424242", lw=1))
     # ground floor equipment room
     ax.add_patch(Rectangle((bx + 0.1, 0.38), 2.4, 0.78, fc="#FFF8E1", ec="#B08900", lw=1.1, ls=(0, (4, 3)), zorder=2))
-    ax.text(bx + 0.18, 1.08, "Equipment room", va="top", fontsize=10, fontweight="bold", color="#8D6E00", zorder=3)
+    ax.text(bx + 2.45, 0.42, "Equipment room", ha="right", va="bottom", fontsize=10, fontweight="bold", color="#8D6E00", zorder=3)
     bts(ax, bx + 0.25, 0.42, None, w=0.36, h=0.56)
     coax(ax, [bx + 0.61, bx + 1.0], [0.7, 0.7], lw=2)
     unit(ax, bx + 1.0, 0.48, 0.95, 0.45, "Head-end", MU_FILL, "#6B5B00", 10)
@@ -142,7 +142,7 @@ def f_das_concept():
     ax.text(8.25, 3.3, "outdoor signal is weakened\nby walls and distance", ha="center", **L)
     ax.text(mx, 0.05, "outdoor macro site", ha="center", **L)
     # numbered steps
-    steps = [((bx + 0.43, 1.25), "1"), ((bx + 1.47, 1.25), "2"), ((rx + 1.6, 0.3 + 3 * fh + 0.25), "3")]
+    steps = [((bx + 0.43, 1.05), "1"), ((bx + 1.47, 1.05), "2"), ((rx + 1.95, 0.3 + 3 * fh + 0.62), "3")]
     for (x, y), t in steps:
         ax.add_patch(Circle((x, y), 0.14, fc="#D9534F", ec="none", zorder=9))
         ax.text(x, y, t, ha="center", va="center", color="white", fontsize=11, fontweight="bold", zorder=10)
@@ -257,27 +257,45 @@ def f_das_arch():
     save(fig, "das_arch.png")
 
 
-# =============================================================== stadium case
-def f_stadium():
-    fig, ax = canvas(11, 4.1)
-    cx, cy = 4.0, 2.05
-    ax.add_patch(Ellipse((cx, cy), 7.4, 3.8, fc="#E0E0E0", ec="#616161", lw=1.5, zorder=1))
-    ax.add_patch(Ellipse((cx, cy), 4.4, 1.9, fc="#7CB342", ec="white", lw=2, zorder=2))
-    ax.add_patch(Rectangle((cx - 1.6, cy - 0.65), 3.2, 1.3, fill=False, ec="white", lw=1.5, zorder=3))
-    ax.plot([cx, cx], [cy - 0.65, cy + 0.65], color="white", lw=1.5, zorder=3)
-    ax.add_patch(Circle((cx, cy), 0.3, fill=False, ec="white", lw=1.5, zorder=3))
-    ax.text(cx, cy + 1.45, "stands", ha="center", **L)
-    ax.add_patch(Ellipse((cx, cy), 6.0, 2.95, fill=False, ec=FIBER, lw=2.6, zorder=4))
-    for t in np.deg2rad(np.arange(0, 360, 36)):
-        x, y = cx + 3.0 * np.cos(t), cy + 1.475 * np.sin(t)
-        ax.add_patch(Rectangle((x - 0.15, y - 0.11), 0.3, 0.22, fc=RU_FILL, ec="#2B5C8A", lw=1.1, zorder=6))
-    fib(ax, [cx + 3.0, 8.3], [cy, cy], lw=2.6)
-    unit(ax, 8.3, 1.25, 2.5, 1.6, "Base-station hotel\n+\noptical master units", MU_FILL, "#6B5B00", 12)
-    ax.add_patch(Rectangle((8.3, 0.55), 0.3, 0.22, fc=RU_FILL, ec="#2B5C8A", lw=1.1))
-    ax.text(8.7, 0.66, "fiber-fed remote unit", va="center", **L)
-    ax.plot([8.3, 8.6], [0.25, 0.25], color=FIBER, lw=2.6)
-    ax.text(8.7, 0.25, "fiber route", va="center", **L)
-    save(fig, "stadium.png")
+# =============================================================== subway case
+def f_subway():
+    fig, ax = canvas(11, 4.3)
+    gy = 3.0                                   # street level
+    ax.add_patch(Rectangle((0, gy), 11, 0.04, fc="#616161", ec="none"))
+    ax.add_patch(Rectangle((0, 0.15), 11, gy - 0.15, fc="#EFEBE9", ec="none", zorder=0))
+    ax.text(10.9, gy + 0.08, "street level", ha="right", va="bottom", **L)
+    # base-station hotel above ground
+    ax.add_patch(Rectangle((0.3, gy + 0.04), 2.6, 1.05, fc="#FFF8E1", ec="#B08900", lw=1.2, zorder=2))
+    ax.text(1.6, gy + 0.98, "Base-station hotel (4 operators)", ha="center", va="top", fontsize=11, fontweight="bold", color="#8D6E00")
+    for k in range(4):
+        bts(ax, 0.42 + k * 0.38, gy + 0.12, None, w=0.3, h=0.5)
+    unit(ax, 2.0, gy + 0.15, 0.8, 0.5, "MU", MU_FILL, "#6B5B00", 10)
+    # two stations + tunnel
+    stations = [(3.2, 5.7), (7.6, 10.6)]
+    for x0, x1 in stations:
+        ax.add_patch(Rectangle((x0, 1.0), x1 - x0, 1.35, fc="#FAFAFA", ec="#424242", lw=1.3, zorder=1))
+        ax.add_patch(Rectangle((x0, 1.0), x1 - x0, 0.22, fc="#BDBDBD", ec="none", zorder=2))
+        ax.text((x0 + x1) / 2, 1.06, "platform", ha="center", va="bottom", fontsize=9, color="#424242", zorder=3)
+    ax.add_patch(Rectangle((5.7, 1.0), 1.9, 0.75, fc="#D7CCC8", ec="#424242", lw=1.3, zorder=1))
+    ax.text(6.65, 1.38, "tunnel", ha="center", va="center", **L)
+    ax.plot([0.2, 10.8], [0.95, 0.95], color="#5D4037", lw=2.2, zorder=3)          # track
+    for x in (3.6, 8.1):                                                             # trains
+        ax.add_patch(FancyBboxPatch((x, 1.24), 1.4, 0.42, boxstyle="round,pad=0,rounding_size=0.08", fc="#90A4AE", ec="#37474F", lw=1, zorder=4))
+        for w in range(4):
+            ax.add_patch(Rectangle((x + 0.1 + w * 0.33, 1.4), 0.22, 0.16, fc="#E3F2FD", ec="none", zorder=5))
+    # fiber from MU down a shaft and along the stations / tunnel
+    fib(ax, [2.8, 3.05, 3.05, 10.4], [gy + 0.4, gy + 0.4, 2.55, 2.55], lw=2.6)
+    for x in (3.6, 4.9, 6.65, 8.1, 9.6):
+        unit(ax, x - 0.22, 2.2, 0.44, 0.26, "RU", fs=8)
+        fib(ax, [x, x], [2.46, 2.55], lw=2)
+        ceiling_antenna(ax, x + 0.38, 2.2, 0.8)
+        ax.plot([x + 0.22, x + 0.38], [2.33, 2.33], color=COAX, lw=1, zorder=3)
+    for x in (4.3, 5.3, 8.9, 10.1):
+        handset(ax, x, 1.7, w=0.11, h=0.2)
+    ax.text(3.3, 2.65, "fiber", ha="left", fontsize=11, style="italic", color="#B85C00")
+    ax.text(4.45, 0.45, "station", ha="center", **B)
+    ax.text(9.1, 0.45, "station", ha="center", **B)
+    save(fig, "subway.png")
 
 
 # =============================================================== research demo
@@ -305,6 +323,6 @@ def f_demo():
     save(fig, "demo.png")
 
 
-for fn in (f_transition, f_das_concept, f_das_types, f_coax_loss, f_das_arch, f_stadium, f_demo):
+for fn in (f_transition, f_das_concept, f_das_types, f_coax_loss, f_das_arch, f_subway, f_demo):
     fn()
 print("written to", OUT)
